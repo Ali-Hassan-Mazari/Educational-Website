@@ -1,0 +1,3240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduPathPK — Pakistan's Premier Education Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #16161f;
+    --bg4: #1c1c28;
+    --card: #1a1a25;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --gold: #d4a847;
+    --gold2: #f0c060;
+    --gold-dim: rgba(212,168,71,0.12);
+    --gold-glow: rgba(212,168,71,0.25);
+    --emerald: #2dd4a0;
+    --emerald-dim: rgba(45,212,160,0.1);
+    --text: #f0ede8;
+    --text2: #9b9893;
+    --text3: #6b6866;
+    --ruby: #e85d6a;
+    --ruby-dim: rgba(232,93,106,0.12);
+    --sapphire: #5b8dee;
+    --sapphire-dim: rgba(91,141,238,0.1);
+    --r: 12px;
+    --r2: 18px;
+    --r3: 24px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg2); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── LAYOUT ── */
+  .app { display: flex; height: 100vh; position: relative; z-index: 1; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: 260px;
+    min-width: 260px;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .logo-area {
+    padding: 28px 24px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--gold), #e8b840);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.3px;
+  }
+
+  .logo-text span { color: var(--gold); }
+
+  .logo-tagline {
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-left: 46px;
+  }
+
+  .nav { flex: 1; padding: 16px 12px; overflow-y: auto; }
+
+  .nav-section {
+    margin-bottom: 24px;
+  }
+
+  .nav-section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text3);
+    padding: 0 12px;
+    margin-bottom: 8px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: var(--r);
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text2);
+    font-size: 14px;
+    font-weight: 400;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+  }
+
+  .nav-item:hover { background: var(--bg3); color: var(--text); }
+
+  .nav-item.active {
+    background: var(--gold-dim);
+    color: var(--gold2);
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .nav-badge {
+    margin-left: auto;
+    background: var(--ruby-dim);
+    color: var(--ruby);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 99px;
+  }
+
+  .sidebar-footer {
+    padding: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .plan-card {
+    background: var(--gold-dim);
+    border: 1px solid rgba(212,168,71,0.2);
+    border-radius: var(--r2);
+    padding: 14px 16px;
+  }
+
+  .plan-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .plan-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: var(--gold2);
+    margin-bottom: 8px;
+  }
+
+  .plan-queries {
+    font-size: 12px;
+    color: var(--text2);
+    margin-bottom: 10px;
+  }
+
+  .queries-bar {
+    height: 3px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .queries-fill {
+    height: 100%;
+    width: 40%;
+    background: linear-gradient(90deg, var(--gold), var(--gold2));
+    border-radius: 99px;
+  }
+
+  .upgrade-btn {
+    margin-top: 10px;
+    width: 100%;
+    background: linear-gradient(135deg, var(--gold), #e8b840);
+    color: #1a1000;
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.3px;
+    transition: opacity 0.2s;
+  }
+
+  .upgrade-btn:hover { opacity: 0.85; }
+
+  /* ── MAIN ── */
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    height: 60px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+  }
+
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .page-breadcrumb {
+    font-size: 13px;
+    color: var(--text3);
+  }
+
+  .topbar-right { display: flex; align-items: center; gap: 12px; }
+
+  .topbar-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border2);
+    background: var(--bg3);
+    color: var(--text2);
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .topbar-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  .topbar-btn.primary {
+    background: var(--gold-dim);
+    border-color: rgba(212,168,71,0.3);
+    color: var(--gold2);
+  }
+
+  /* ── CONTENT AREA ── */
+  .content { flex: 1; overflow-y: auto; padding: 28px; }
+
+  /* ── SECTIONS (panel switching) ── */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ── HERO / CHAT SECTION ── */
+  .chat-hero {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px - 56px);
+  }
+
+  .chat-welcome {
+    text-align: center;
+    padding: 48px 20px 40px;
+    flex-shrink: 0;
+  }
+
+  .welcome-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gold-dim);
+    border: 1px solid rgba(212,168,71,0.25);
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 99px;
+    margin-bottom: 20px;
+  }
+
+  .welcome-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+
+  .welcome-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .welcome-sub {
+    font-size: 15px;
+    color: var(--text2);
+    line-height: 1.6;
+    max-width: 520px;
+    margin: 0 auto 32px;
+  }
+
+  .quick-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+
+  .chip {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    color: var(--text2);
+    padding: 7px 14px;
+    border-radius: 99px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .chip:hover { border-color: var(--gold); color: var(--gold2); background: var(--gold-dim); }
+
+  /* ── CHAT MESSAGES ── */
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .msg {
+    display: flex;
+    gap: 12px;
+    animation: msgIn 0.3s ease;
+  }
+
+  @keyframes msgIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .msg.user { flex-direction: row-reverse; }
+
+  .msg-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .msg-avatar.ai {
+    background: var(--gold-dim);
+    border: 1px solid rgba(212,168,71,0.3);
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+  }
+
+  .msg-avatar.human {
+    background: var(--sapphire-dim);
+    border: 1px solid rgba(91,141,238,0.3);
+    color: var(--sapphire);
+  }
+
+  .msg-bubble {
+    max-width: 72%;
+    padding: 12px 16px;
+    border-radius: var(--r2);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .msg.ai .msg-bubble {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-top-left-radius: 4px;
+  }
+
+  .msg.user .msg-bubble {
+    background: var(--gold-dim);
+    border: 1px solid rgba(212,168,71,0.2);
+    color: var(--gold2);
+    border-top-right-radius: 4px;
+    text-align: right;
+  }
+
+  .msg-time {
+    font-size: 11px;
+    color: var(--text3);
+    margin-top: 4px;
+    padding: 0 4px;
+  }
+
+  .msg.user .msg-time { text-align: right; }
+
+  /* ── TYPING INDICATOR ── */
+  .typing-dot {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 2px;
+    animation: typingBounce 1.2s infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+    30% { transform: translateY(-5px); opacity: 1; }
+  }
+
+  /* ── CHAT INPUT ── */
+  .chat-input-area {
+    padding: 16px 0 4px;
+    flex-shrink: 0;
+  }
+
+  .chat-input-wrapper {
+    background: var(--card);
+    border: 1px solid var(--border2);
+    border-radius: var(--r2);
+    padding: 12px 16px;
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    transition: border-color 0.2s;
+  }
+
+  .chat-input-wrapper:focus-within { border-color: rgba(212,168,71,0.5); }
+
+  #chatInput {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.5;
+    resize: none;
+    min-height: 20px;
+    max-height: 120px;
+    overflow-y: auto;
+  }
+
+  #chatInput::placeholder { color: var(--text3); }
+
+  .send-btn {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--gold), #e8b840);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: opacity 0.2s, transform 0.15s;
+    color: #1a1000;
+    font-size: 16px;
+  }
+
+  .send-btn:hover { opacity: 0.85; transform: scale(1.05); }
+  .send-btn:active { transform: scale(0.95); }
+
+  .input-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 4px 0;
+  }
+
+  .lang-toggle {
+    display: flex;
+    gap: 4px;
+  }
+
+  .lang-btn {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text3);
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .lang-btn.active { background: var(--gold-dim); border-color: rgba(212,168,71,0.4); color: var(--gold); }
+
+  .query-count { font-size: 11px; color: var(--text3); }
+  .query-count span { color: var(--emerald); font-weight: 600; }
+
+  /* ── UNIVERSITIES SECTION ── */
+  .section-header {
+    margin-bottom: 28px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .section-sub {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .filter-btn {
+    padding: 7px 16px;
+    border-radius: 99px;
+    border: 1px solid var(--border2);
+    background: var(--bg3);
+    color: var(--text2);
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .filter-btn:hover { border-color: var(--gold); color: var(--gold2); }
+  .filter-btn.active { background: var(--gold-dim); border-color: rgba(212,168,71,0.4); color: var(--gold2); font-weight: 500; }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--card);
+    border: 1px solid var(--border2);
+    border-radius: var(--r);
+    padding: 10px 16px;
+    margin-bottom: 20px;
+  }
+
+  .search-box input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .search-box input::placeholder { color: var(--text3); }
+
+  .uni-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .uni-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .uni-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .uni-card:hover { border-color: var(--border2); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+  .uni-card:hover::before { opacity: 1; }
+
+  .uni-card.selected { border-color: rgba(212,168,71,0.5); background: var(--gold-dim); }
+  .uni-card.selected::before { opacity: 1; }
+
+  .uni-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .uni-emblem {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 15px;
+    font-family: 'Playfair Display', serif;
+    flex-shrink: 0;
+  }
+
+  .uni-type-badge {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 99px;
+  }
+
+  .badge-public { background: var(--emerald-dim); color: var(--emerald); }
+  .badge-private { background: var(--sapphire-dim); color: var(--sapphire); }
+  .badge-engineering { background: var(--ruby-dim); color: var(--ruby); }
+  .badge-medical { background: rgba(130,100,255,0.12); color: #a07df5; }
+  .badge-arts { background: rgba(255,160,80,0.12); color: #f5a050; }
+  .badge-business { background: rgba(80,200,255,0.12); color: #50c8ff; }
+
+  .uni-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .uni-city {
+    font-size: 12px;
+    color: var(--text3);
+    margin-bottom: 12px;
+  }
+
+  .uni-stats {
+    display: flex;
+    gap: 16px;
+  }
+
+  .uni-stat {
+    font-size: 12px;
+    color: var(--text2);
+  }
+
+  .uni-stat strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .uni-depts {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .dept-pill {
+    font-size: 10px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text3);
+    padding: 2px 8px;
+    border-radius: 99px;
+  }
+
+  .dept-pill.more { color: var(--gold); border-color: rgba(212,168,71,0.2); background: var(--gold-dim); }
+
+  /* ── COMPARE SECTION ── */
+  .compare-picker {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    padding: 24px;
+    margin-bottom: 28px;
+  }
+
+  .compare-picker-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text2);
+    margin-bottom: 16px;
+  }
+
+  .compare-slots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .compare-slot {
+    background: var(--bg3);
+    border: 1px dashed var(--border2);
+    border-radius: var(--r);
+    padding: 16px;
+    text-align: center;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .compare-slot:hover { border-color: var(--gold); }
+
+  .compare-slot.filled {
+    border-style: solid;
+    border-color: rgba(212,168,71,0.4);
+    background: var(--gold-dim);
+    cursor: default;
+  }
+
+  .compare-slot-label {
+    font-size: 12px;
+    color: var(--text3);
+  }
+
+  .compare-slot-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gold2);
+    font-family: 'Playfair Display', serif;
+  }
+
+  .compare-slot-remove {
+    font-size: 11px;
+    color: var(--ruby);
+    cursor: pointer;
+    margin-top: 2px;
+  }
+
+  .compare-btn {
+    width: 100%;
+    margin-top: 16px;
+    background: linear-gradient(135deg, var(--gold), #e8b840);
+    color: #1a1000;
+    border: none;
+    border-radius: var(--r);
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.3px;
+    transition: opacity 0.2s;
+  }
+
+  .compare-btn:hover { opacity: 0.85; }
+  .compare-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* ── COMPARISON TABLE ── */
+  .compare-table-wrap {
+    overflow-x: auto;
+    border-radius: var(--r2);
+    border: 1px solid var(--border);
+  }
+
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .compare-table th {
+    background: var(--card);
+    padding: 16px 18px;
+    text-align: left;
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  .compare-table th:first-child {
+    color: var(--text3);
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    width: 180px;
+  }
+
+  .compare-table td {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text2);
+    vertical-align: top;
+  }
+
+  .compare-table td:first-child {
+    color: var(--text3);
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: var(--bg2);
+  }
+
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:hover td { background: var(--bg3); }
+  .compare-table tr:hover td:first-child { background: var(--bg3); }
+
+  .score-bar { display: flex; align-items: center; gap: 8px; }
+  .score-bar-track { flex: 1; height: 4px; background: var(--border); border-radius: 99px; max-width: 80px; }
+  .score-bar-fill { height: 100%; border-radius: 99px; }
+  .score-bar-fill.gold { background: var(--gold); }
+  .score-bar-fill.emerald { background: var(--emerald); }
+  .score-bar-fill.ruby { background: var(--ruby); }
+
+  /* ── ROADMAP SECTION ── */
+  .roadmap-selector {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+
+  .roadmap-select {
+    flex: 1;
+    min-width: 180px;
+    background: var(--card);
+    border: 1px solid var(--border2);
+    border-radius: var(--r);
+    padding: 10px 14px;
+    color: var(--text);
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .roadmap-select:focus { border-color: rgba(212,168,71,0.5); }
+
+  .roadmap-select option { background: var(--bg3); }
+
+  .roadmap-generate {
+    padding: 10px 24px;
+    background: var(--gold-dim);
+    border: 1px solid rgba(212,168,71,0.4);
+    color: var(--gold2);
+    border-radius: var(--r);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .roadmap-generate:hover { background: rgba(212,168,71,0.2); }
+
+  .roadmap-content { display: none; }
+  .roadmap-content.visible { display: block; }
+
+  .roadmap-timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+
+  .roadmap-timeline::before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .roadmap-phase {
+    position: relative;
+    margin-bottom: 32px;
+    animation: fadeSlide 0.4s ease both;
+  }
+
+  .roadmap-phase:nth-child(1) { animation-delay: 0.05s; }
+  .roadmap-phase:nth-child(2) { animation-delay: 0.1s; }
+  .roadmap-phase:nth-child(3) { animation-delay: 0.15s; }
+  .roadmap-phase:nth-child(4) { animation-delay: 0.2s; }
+
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateX(-12px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .roadmap-dot {
+    position: absolute;
+    left: -26px;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .roadmap-dot::after {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  .roadmap-phase-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .phase-level {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 99px;
+  }
+
+  .level-beginner { background: var(--emerald-dim); color: var(--emerald); }
+  .level-intermediate { background: var(--sapphire-dim); color: var(--sapphire); }
+  .level-advanced { background: var(--gold-dim); color: var(--gold); }
+  .level-career { background: var(--ruby-dim); color: var(--ruby); }
+
+  .phase-semester {
+    font-size: 13px;
+    color: var(--text3);
+  }
+
+  .phase-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .phase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+
+  .phase-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 14px;
+  }
+
+  .phase-card-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 6px;
+  }
+
+  .phase-card-items {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .phase-item {
+    font-size: 13px;
+    color: var(--text2);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .phase-item::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ── SALARY CARDS ── */
+  .salary-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .salary-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 16px;
+    text-align: center;
+  }
+
+  .salary-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 8px;
+  }
+
+  .salary-amount {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--emerald);
+    margin-bottom: 4px;
+  }
+
+  .salary-sub { font-size: 11px; color: var(--text3); }
+
+  /* ── SCHOLARSHIPS SECTION ── */
+  .schol-hero {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--r3);
+    padding: 32px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .schol-hero::after {
+    content: '🎓';
+    position: absolute;
+    right: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 80px;
+    opacity: 0.08;
+  }
+
+  .schol-hero-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .schol-hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .schol-hero-sub { font-size: 14px; color: var(--text2); line-height: 1.6; max-width: 600px; }
+
+  .schol-tabs {
+    display: flex;
+    gap: 0;
+    background: var(--bg3);
+    border-radius: var(--r);
+    padding: 4px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border);
+  }
+
+  .schol-tab {
+    flex: 1;
+    padding: 9px 14px;
+    border-radius: 8px;
+    border: none;
+    background: none;
+    color: var(--text2);
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .schol-tab.active {
+    background: var(--card);
+    color: var(--gold2);
+    font-weight: 500;
+    border: 1px solid var(--border2);
+  }
+
+  .schol-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
+  .schol-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    padding: 20px;
+    transition: all 0.25s;
+    cursor: pointer;
+  }
+
+  .schol-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+
+  .schol-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .schol-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+
+  .schol-amount {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--emerald);
+    background: var(--emerald-dim);
+    padding: 3px 10px;
+    border-radius: 99px;
+  }
+
+  .schol-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .schol-org { font-size: 12px; color: var(--text3); margin-bottom: 12px; }
+
+  .schol-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }
+
+  .schol-tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 99px;
+    border: 1px solid var(--border2);
+    color: var(--text3);
+  }
+
+  .schol-deadline {
+    font-size: 12px;
+    color: var(--text2);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .deadline-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  /* ── ENTRY TEST SECTION ── */
+  .test-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .test-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+
+  .test-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+
+  .test-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .test-badge {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold2);
+  }
+
+  .test-difficulty {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 99px;
+  }
+
+  .diff-hard { background: var(--ruby-dim); color: var(--ruby); }
+  .diff-medium { background: var(--gold-dim); color: var(--gold); }
+  .diff-moderate { background: var(--sapphire-dim); color: var(--sapphire); }
+
+  .test-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .test-unis { font-size: 12px; color: var(--text3); margin-bottom: 14px; }
+
+  .test-subjects { display: flex; flex-wrap: wrap; gap: 4px; }
+
+  .test-subject {
+    font-size: 11px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+
+  /* ── PAYMENT MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    border-radius: var(--r3);
+    padding: 36px;
+    width: 420px;
+    max-width: 90vw;
+    animation: modalIn 0.3s ease;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.94) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .modal-sub { font-size: 14px; color: var(--text2); margin-bottom: 24px; }
+
+  .plan-features {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .plan-feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text2);
+  }
+
+  .feature-check {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--emerald-dim);
+    border: 1px solid rgba(45,212,160,0.3);
+    color: var(--emerald);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  .plan-price {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: var(--gold-dim);
+    border: 1px solid rgba(212,168,71,0.2);
+    border-radius: var(--r2);
+  }
+
+  .price-amount {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--gold2);
+  }
+
+  .price-period { font-size: 14px; color: var(--text3); }
+
+  .mock-payment-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--gold), #e8b840);
+    color: #1a1000;
+    border: none;
+    border-radius: var(--r);
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: opacity 0.2s;
+    margin-bottom: 10px;
+  }
+
+  .mock-payment-btn:hover { opacity: 0.85; }
+
+  .modal-close-btn {
+    width: 100%;
+    background: none;
+    border: 1px solid var(--border2);
+    color: var(--text2);
+    border-radius: var(--r);
+    padding: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: border-color 0.2s;
+  }
+
+  .modal-close-btn:hover { border-color: var(--border); }
+
+  /* ── SUCCESS TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--bg2);
+    border: 1px solid rgba(45,212,160,0.4);
+    color: var(--text);
+    padding: 14px 20px;
+    border-radius: var(--r2);
+    font-size: 14px;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  .toast-icon { color: var(--emerald); font-size: 18px; }
+
+  /* ── ISSB SECTION ── */
+  .issb-banner {
+    background: linear-gradient(135deg, rgba(91,141,238,0.08), rgba(212,168,71,0.05));
+    border: 1px solid rgba(91,141,238,0.2);
+    border-radius: var(--r2);
+    padding: 28px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .issb-banner-icon {
+    font-size: 48px;
+    flex-shrink: 0;
+  }
+
+  .issb-banner-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .issb-banner-sub { font-size: 14px; color: var(--text2); line-height: 1.6; }
+
+  .test-prep-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+  }
+
+  .prep-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    padding: 18px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .prep-card:hover { border-color: var(--border2); }
+
+  .prep-icon { font-size: 28px; margin-bottom: 10px; }
+  .prep-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .prep-sub { font-size: 12px; color: var(--text3); line-height: 1.5; }
+
+  /* ── CSS SECTION ── */
+  .css-phases {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .css-phase-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    padding: 18px;
+    border-top: 2px solid var(--gold);
+  }
+
+  .css-phase-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .css-phase-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .css-subjects {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .css-subject {
+    font-size: 12px;
+    color: var(--text2);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .css-subject::before {
+    content: '';
+    width: 4px; height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── LOADING ── */
+  .loading-spinner {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+    padding: 12px 16px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .salary-row { grid-template-columns: 1fr; }
+    .compare-slots { grid-template-columns: 1fr; }
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-in { animation: fadeIn 0.5s ease both; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .slide-up { animation: slideUp 0.4s ease both; }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── HOVER GLOW ── */
+  .glow-gold { transition: box-shadow 0.2s; }
+  .glow-gold:hover { box-shadow: 0 0 20px var(--gold-glow); }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+    <div class="logo-area">
+      <div class="logo">
+        <div class="logo-icon">📚</div>
+        <div class="logo-text">Edu<span>Path</span>PK</div>
+      </div>
+      <div class="logo-tagline">Pakistan's Premier Guide</div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-section">
+        <div class="nav-section-label">Explore</div>
+        <button class="nav-item active" onclick="showSection('chat')">
+          <span class="nav-icon">💬</span> AI Assistant
+        </button>
+        <button class="nav-item" onclick="showSection('universities')">
+          <span class="nav-icon">🏛️</span> Universities
+        </button>
+        <button class="nav-item" onclick="showSection('compare')">
+          <span class="nav-icon">⚖️</span> Compare
+          <span class="nav-badge">3 max</span>
+        </button>
+        <button class="nav-item" onclick="showSection('roadmap')">
+          <span class="nav-icon">🗺️</span> Career Roadmap
+        </button>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-label">Preparation</div>
+        <button class="nav-item" onclick="showSection('entrytests')">
+          <span class="nav-icon">✏️</span> Entry Tests
+        </button>
+        <button class="nav-item" onclick="showSection('issb')">
+          <span class="nav-icon">🎖️</span> ISSB / PMA
+        </button>
+        <button class="nav-item" onclick="showSection('css')">
+          <span class="nav-icon">⚖️</span> CSS Prep
+        </button>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-label">Finance</div>
+        <button class="nav-item" onclick="showSection('scholarships')">
+          <span class="nav-icon">🎓</span> Scholarships
+          <span class="nav-badge">New</span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="plan-card">
+        <div class="plan-label">Current Plan</div>
+        <div class="plan-name">Free Trial</div>
+        <div class="plan-queries">2 of 5 queries used</div>
+        <div class="queries-bar"><div class="queries-fill"></div></div>
+        <button class="upgrade-btn" onclick="openPayment()">⭐ Upgrade — PKR 799/mo</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <main class="main">
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="page-title" id="pageTitle">AI Assistant</div>
+        <div class="page-breadcrumb" id="pageBreadcrumb">Ask anything about admissions & career</div>
+      </div>
+      <div class="topbar-right">
+        <button class="topbar-btn" onclick="showSection('compare')">⚖️ Compare Unis</button>
+        <button class="topbar-btn primary" onclick="openPayment()">⭐ Pro</button>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- ── CHAT SECTION ── -->
+      <section class="section active" id="section-chat">
+        <div class="chat-hero">
+          <div class="chat-welcome" id="chatWelcome">
+            <div class="welcome-badge">✨ AI-Powered Platform</div>
+            <h1 class="welcome-title">Your Guide to <em>Pakistani</em> Education</h1>
+            <p class="welcome-sub">Ask in Urdu or English. Get expert guidance on admissions, entry tests, scholarships, and career paths.</p>
+            <div class="quick-chips">
+              <button class="chip" onclick="sendChip('NUST NET preparation guide')">📝 NUST NET Prep</button>
+              <button class="chip" onclick="sendChip('LUMS merit for CS 2024')">📊 LUMS Merit Trends</button>
+              <button class="chip" onclick="sendChip('HEC scholarships for undergrad')">🎓 HEC Scholarships</button>
+              <button class="chip" onclick="sendChip('Computer Science career roadmap Pakistan')">🗺️ CS Roadmap</button>
+              <button class="chip" onclick="sendChip('MBBS admission criteria Pakistan')">🏥 MBBS Admissions</button>
+              <button class="chip" onclick="sendChip('ISSB preparation tips')">🎖️ ISSB Tips</button>
+            </div>
+          </div>
+
+          <div class="chat-messages" id="chatMessages"></div>
+
+          <div class="chat-input-area">
+            <div class="chat-input-wrapper">
+              <textarea id="chatInput" rows="1" placeholder="Ask about admissions, entry tests, scholarships, careers... (Urdu/English)" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+              <button class="send-btn" onclick="sendMessage()">➤</button>
+            </div>
+            <div class="input-meta">
+              <div class="lang-toggle">
+                <button class="lang-btn active" id="langEN" onclick="setLang('EN')">EN</button>
+                <button class="lang-btn" id="langUR" onclick="setLang('UR')">اردو</button>
+              </div>
+              <div class="query-count">Free queries: <span id="queryLeft">3</span>/5 remaining</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── UNIVERSITIES SECTION ── -->
+      <section class="section" id="section-universities">
+        <div class="section-header slide-up">
+          <h2 class="section-title">Universities of Pakistan</h2>
+          <p class="section-sub">Browse 50+ universities. Click any card to explore departments, fees, and admission criteria.</p>
+        </div>
+
+        <div class="search-box">
+          <span style="color:var(--text3)">🔍</span>
+          <input type="text" id="uniSearch" placeholder="Search universities, departments, cities..." oninput="filterUnis()">
+        </div>
+
+        <div class="filter-bar">
+          <button class="filter-btn active" onclick="filterByType('all', this)">All</button>
+          <button class="filter-btn" onclick="filterByType('cs-it', this)">💻 CS / IT</button>
+          <button class="filter-btn" onclick="filterByType('engineering', this)">⚙️ Engineering</button>
+          <button class="filter-btn" onclick="filterByType('business', this)">💼 Business</button>
+          <button class="filter-btn" onclick="filterByType('medical', this)">🏥 Medical</button>
+          <button class="filter-btn" onclick="filterByType('arts', this)">🎨 Arts</button>
+          <button class="filter-btn" onclick="filterByType('general', this)">📚 General</button>
+          <button class="filter-btn" onclick="filterByType('agriculture', this)">🌾 Agriculture</button>
+        </div>
+
+        <div class="uni-grid" id="uniGrid"></div>
+      </section>
+
+      <!-- ── COMPARE SECTION ── -->
+      <section class="section" id="section-compare">
+        <div class="section-header slide-up">
+          <h2 class="section-title">University Comparison</h2>
+          <p class="section-sub">Select up to 3 universities and compare them side-by-side across key metrics.</p>
+        </div>
+
+        <div class="compare-picker">
+          <div class="compare-picker-title">Select universities to compare (max 3)</div>
+          <div class="compare-slots">
+            <div class="compare-slot" id="slot0" onclick="openUniPicker(0)">
+              <div style="font-size:24px">+</div>
+              <div class="compare-slot-label">Add University 1</div>
+            </div>
+            <div class="compare-slot" id="slot1" onclick="openUniPicker(1)">
+              <div style="font-size:24px">+</div>
+              <div class="compare-slot-label">Add University 2</div>
+            </div>
+            <div class="compare-slot" id="slot2" onclick="openUniPicker(2)">
+              <div style="font-size:24px">+</div>
+              <div class="compare-slot-label">Add University 3</div>
+            </div>
+          </div>
+          <button class="compare-btn" id="compareBtn" onclick="generateComparison()" disabled>⚖️ Generate Comparison</button>
+        </div>
+
+        <div id="compareResult"></div>
+      </section>
+
+      <!-- ── ROADMAP SECTION ── -->
+      <section class="section" id="section-roadmap">
+        <div class="section-header slide-up">
+          <h2 class="section-title">Career Roadmaps</h2>
+          <p class="section-sub">Step-by-step learning paths for every department — from beginner to career-ready.</p>
+        </div>
+
+        <div class="roadmap-selector">
+          <select class="roadmap-select" id="rmUni">
+            <option value="">Select University</option>
+          </select>
+          <select class="roadmap-select" id="rmDept">
+            <option value="">Select Department</option>
+          </select>
+          <button class="roadmap-generate" onclick="generateRoadmap()">Generate Roadmap →</button>
+        </div>
+
+        <div class="roadmap-content" id="roadmapContent"></div>
+      </section>
+
+      <!-- ── ENTRY TESTS SECTION ── -->
+      <section class="section" id="section-entrytests">
+        <div class="section-header slide-up">
+          <h2 class="section-title">Entry Test Preparation</h2>
+          <p class="section-sub">Comprehensive guides for all major Pakistani university entry tests.</p>
+        </div>
+
+        <div class="test-cards">
+          <div class="test-card" onclick="askAbout('NUST NET entry test complete preparation guide with syllabus and tips')">
+            <div class="test-card-header">
+              <div class="test-badge">NET</div>
+              <span class="test-difficulty diff-hard">Hard</span>
+            </div>
+            <div class="test-name">NUST Entry Test</div>
+            <div class="test-unis">NUST Islamabad</div>
+            <div class="test-subjects">
+              <span class="test-subject">Physics</span>
+              <span class="test-subject">Chemistry</span>
+              <span class="test-subject">Mathematics</span>
+              <span class="test-subject">English</span>
+              <span class="test-subject">IQ</span>
+            </div>
+          </div>
+
+          <div class="test-card" onclick="askAbout('LUMS SAT / LCAT admission test preparation guide with merit criteria')">
+            <div class="test-card-header">
+              <div class="test-badge">LCAT</div>
+              <span class="test-difficulty diff-hard">Very Hard</span>
+            </div>
+            <div class="test-name">LUMS Entry Test</div>
+            <div class="test-unis">Lahore University of Management Sciences</div>
+            <div class="test-subjects">
+              <span class="test-subject">Quantitative</span>
+              <span class="test-subject">Verbal</span>
+              <span class="test-subject">Critical Reasoning</span>
+            </div>
+          </div>
+
+          <div class="test-card" onclick="askAbout('IBA Karachi entry test preparation guide with merit and departments')">
+            <div class="test-card-header">
+              <div class="test-badge">IBA</div>
+              <span class="test-difficulty diff-hard">Hard</span>
+            </div>
+            <div class="test-name">IBA Karachi Test</div>
+            <div class="test-unis">Institute of Business Administration</div>
+            <div class="test-subjects">
+              <span class="test-subject">Math</span>
+              <span class="test-subject">English</span>
+              <span class="test-subject">Analytical</span>
+            </div>
+          </div>
+
+          <div class="test-card" onclick="askAbout('NED University ECAT test preparation complete syllabus and strategy')">
+            <div class="test-card-header">
+              <div class="test-badge">ECAT</div>
+              <span class="test-difficulty diff-medium">Medium</span>
+            </div>
+            <div class="test-name">NED / ECAT</div>
+            <div class="test-unis">NED, UET, MUET & more</div>
+            <div class="test-subjects">
+              <span class="test-subject">Physics</span>
+              <span class="test-subject">Chemistry</span>
+              <span class="test-subject">Math</span>
+            </div>
+          </div>
+
+          <div class="test-card" onclick="askAbout('FAST NUCES entry test NU test preparation complete guide')">
+            <div class="test-card-header">
+              <div class="test-badge">NU</div>
+              <span class="test-difficulty diff-medium">Medium</span>
+            </div>
+            <div class="test-name">FAST NU Test</div>
+            <div class="test-unis">FAST National University</div>
+            <div class="test-subjects">
+              <span class="test-subject">Math</span>
+              <span class="test-subject">English</span>
+              <span class="test-subject">IQ</span>
+            </div>
+          </div>
+
+          <div class="test-card" onclick="askAbout('MDCAT medical college admission test complete preparation guide Pakistan')">
+            <div class="test-card-header">
+              <div class="test-badge">MDCAT</div>
+              <span class="test-difficulty diff-hard">Hard</span>
+            </div>
+            <div class="test-name">MDCAT</div>
+            <div class="test-unis">All Medical Colleges Pakistan</div>
+            <div class="test-subjects">
+              <span class="test-subject">Biology</span>
+              <span class="test-subject">Chemistry</span>
+              <span class="test-subject">Physics</span>
+              <span class="test-subject">English</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── ISSB SECTION ── -->
+      <section class="section" id="section-issb">
+        <div class="issb-banner slide-up">
+          <div class="issb-banner-icon">🎖️</div>
+          <div>
+            <div class="issb-banner-title">ISSB / PMA Preparation</div>
+            <div class="issb-banner-sub">Inter Services Selection Board & Pakistan Military Academy. Comprehensive preparation for Pakistan's most prestigious service selections.</div>
+          </div>
+        </div>
+
+        <div class="test-prep-grid">
+          <div class="prep-card" onclick="askAbout('ISSB intelligence test preparation complete guide with sample questions')">
+            <div class="prep-icon">🧠</div>
+            <div class="prep-title">Intelligence Tests</div>
+            <div class="prep-sub">Verbal & non-verbal intelligence, pattern recognition, and reasoning tests.</div>
+          </div>
+          <div class="prep-card" onclick="askAbout('ISSB psychological test preparation guide PPDT WAT TAT')">
+            <div class="prep-icon">🧩</div>
+            <div class="prep-title">Psychological Tests</div>
+            <div class="prep-sub">WAT, TAT, PPDT and situation reaction tests guidance.</div>
+          </div>
+          <div class="prep-card" onclick="askAbout('ISSB GTO group task officer preparation tips outdoor tasks')">
+            <div class="prep-icon">🏃</div>
+            <div class="prep-title">GTO Tasks</div>
+            <div class="prep-sub">Group planning, obstacle courses, command tasks, and outdoor activities.</div>
+          </div>
+          <div class="prep-card" onclick="askAbout('ISSB interview preparation tips IO interview Pakistan Army')">
+            <div class="prep-icon">🎙️</div>
+            <div class="prep-title">IO Interview</div>
+            <div class="prep-sub">Individual officer interview preparation, personality, and current affairs.</div>
+          </div>
+          <div class="prep-card" onclick="askAbout('PMA Long Course eligibility criteria and application process Pakistan')">
+            <div class="prep-icon">⚔️</div>
+            <div class="prep-title">PMA Long Course</div>
+            <div class="prep-sub">Eligibility, application, physical standards, and training overview.</div>
+          </div>
+          <div class="prep-card" onclick="askAbout('Pakistan Air Force PAF selection process and preparation')">
+            <div class="prep-icon">✈️</div>
+            <div class="prep-title">PAF / PN Selection</div>
+            <div class="prep-sub">Air Force and Navy selection procedures, tests, and requirements.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── CSS SECTION ── -->
+      <section class="section" id="section-css">
+        <div class="section-header slide-up">
+          <h2 class="section-title">CSS Exam Preparation</h2>
+          <p class="section-sub">Central Superior Services — Pakistan's most prestigious competitive examination.</p>
+        </div>
+
+        <div class="css-phases">
+          <div class="css-phase-card">
+            <div class="css-phase-num">Phase 01</div>
+            <div class="css-phase-title">Written Exam</div>
+            <div class="css-subjects">
+              <div class="css-subject">Essay (100 marks)</div>
+              <div class="css-subject">English Précis & Composition</div>
+              <div class="css-subject">General Science & Ability</div>
+              <div class="css-subject">Current Affairs</div>
+              <div class="css-subject">Pakistan Affairs</div>
+              <div class="css-subject">Islamic Studies / Ethics</div>
+            </div>
+          </div>
+          <div class="css-phase-card">
+            <div class="css-phase-num">Phase 02</div>
+            <div class="css-phase-title">Optional Subjects</div>
+            <div class="css-subjects">
+              <div class="css-subject">Political Science</div>
+              <div class="css-subject">International Relations</div>
+              <div class="css-subject">Public Administration</div>
+              <div class="css-subject">Economics</div>
+              <div class="css-subject">Law</div>
+              <div class="css-subject">Sociology</div>
+            </div>
+          </div>
+          <div class="css-phase-card">
+            <div class="css-phase-num">Phase 03</div>
+            <div class="css-phase-title">Viva Voce</div>
+            <div class="css-subjects">
+              <div class="css-subject">Personality Assessment</div>
+              <div class="css-subject">Subject Knowledge</div>
+              <div class="css-subject">Current Affairs</div>
+              <div class="css-subject">Communication Skills</div>
+            </div>
+          </div>
+          <div class="css-phase-card">
+            <div class="css-phase-num">Services</div>
+            <div class="css-phase-title">Allocations</div>
+            <div class="css-subjects">
+              <div class="css-subject">Pakistan Administrative Service</div>
+              <div class="css-subject">Police Service of Pakistan</div>
+              <div class="css-subject">Foreign Service of Pakistan</div>
+              <div class="css-subject">Inland Revenue Service</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="test-prep-grid">
+          <div class="prep-card" onclick="askAbout('CSS essay writing tips and high scoring techniques Pakistan')">
+            <div class="prep-icon">📝</div>
+            <div class="prep-title">Essay Writing</div>
+            <div class="prep-sub">Structure, arguments, and scoring strategy for the most important paper.</div>
+          </div>
+          <div class="prep-card" onclick="askAbout('CSS current affairs preparation strategy Pakistan 2024 2025')">
+            <div class="prep-icon">🌍</div>
+            <div class="prep-title">Current Affairs</div>
+            <div class="prep-sub">National and international current affairs strategy and resources.</div>
+          </div>
+          <div class="prep-card" onclick="askAbout('CSS Pakistan Affairs complete guide constitution history geography')">
+            <div class="prep-icon">🇵🇰</div>
+            <div class="prep-title">Pakistan Affairs</div>
+            <div class="prep-sub">History, constitution, geography, economy, and social issues.</div>
+          </div>
+          <div class="prep-card" onclick="askAbout('CSS optional subjects selection strategy which subjects to choose')">
+            <div class="prep-icon">📚</div>
+            <div class="prep-title">Optional Subjects</div>
+            <div class="prep-sub">How to choose the right optional subjects based on your background.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── SCHOLARSHIPS SECTION ── -->
+      <section class="section" id="section-scholarships">
+        <div class="schol-hero slide-up">
+          <div class="schol-hero-label">Financial Aid</div>
+          <div class="schol-hero-title">Scholarships & Financial Aid</div>
+          <div class="schol-hero-sub">Comprehensive database of HEC, provincial, and need-based scholarships available to Pakistani students.</div>
+        </div>
+
+        <div class="schol-tabs">
+          <button class="schol-tab active" onclick="filterSchols('all', this)">All Scholarships</button>
+          <button class="schol-tab" onclick="filterSchols('hec', this)">HEC</button>
+          <button class="schol-tab" onclick="filterSchols('sindh', this)">Sindh</button>
+          <button class="schol-tab" onclick="filterSchols('punjab', this)">Punjab</button>
+          <button class="schol-tab" onclick="filterSchols('kpk', this)">KPK</button>
+          <button class="schol-tab" onclick="filterSchols('balochistan', this)">Balochistan</button>
+          <button class="schol-tab" onclick="filterSchols('overseas', this)">Overseas</button>
+        </div>
+
+        <div class="schol-grid" id="scholGrid"></div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- ── PAYMENT MODAL ── -->
+<div class="modal-overlay" id="paymentModal">
+  <div class="modal">
+    <div class="modal-title">Upgrade to Pro</div>
+    <div class="modal-sub">Unlock unlimited queries and premium features.</div>
+
+    <div class="plan-features">
+      <div class="plan-feature"><div class="feature-check">✓</div> Unlimited AI queries (Urdu & English)</div>
+      <div class="plan-feature"><div class="feature-check">✓</div> Full department roadmaps for all universities</div>
+      <div class="plan-feature"><div class="feature-check">✓</div> Merit prediction & trend analysis</div>
+      <div class="plan-feature"><div class="feature-check">✓</div> Scholarship eligibility checker</div>
+      <div class="plan-feature"><div class="feature-check">✓</div> CSS & ISSB mock tests</div>
+      <div class="plan-feature"><div class="feature-check">✓</div> Priority support</div>
+    </div>
+
+    <div class="plan-price">
+      <div class="price-amount">₨ 799</div>
+      <div class="price-period">per month · Cancel anytime</div>
+    </div>
+
+    <button class="mock-payment-btn" onclick="processMockPayment()">🔐 Secure Payment via JazzCash / EasyPaisa</button>
+    <button class="modal-close-btn" onclick="closePayment()">Maybe later</button>
+  </div>
+</div>
+
+<!-- ── TOAST ── -->
+<div class="toast" id="toast">
+  <span class="toast-icon">✓</span>
+  <span id="toastMsg">Done!</span>
+</div>
+
+<!-- ── UNI PICKER MODAL ── -->
+<div class="modal-overlay" id="uniPickerModal">
+  <div class="modal" style="width:500px; max-height:80vh; overflow-y:auto;">
+    <div class="modal-title" style="margin-bottom:16px;">Select University</div>
+    <div class="search-box" style="margin-bottom:14px;">
+      <span style="color:var(--text3)">🔍</span>
+      <input type="text" id="pickerSearch" placeholder="Search..." oninput="filterPickerUnis()" style="flex:1;background:none;border:none;outline:none;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;">
+    </div>
+    <div id="pickerList" style="display:flex;flex-direction:column;gap:6px;"></div>
+    <button class="modal-close-btn" style="margin-top:14px;" onclick="closeUniPicker()">Cancel</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════
+
+const UNIVERSITIES = [
+  // CS/IT
+  { id:'fast', name:'FAST National University', short:'FAST', city:'Multiple Cities', type:'cs-it', category:'private', depts:['Computer Science','Software Engineering','Artificial Intelligence','Data Science','Cyber Security','Information Technology','Business Administration','Accounting and Finance','Electrical Engineering','Civil Engineering','Management Sciences'], fee:'80,000–120,000', merit:'75–92%', entryTest:'NU Test', difficulty:75, color:'#3b82f6' },
+  { id:'nust', name:'NUST', short:'NUST', city:'Islamabad', type:'cs-it', category:'public', depts:['Computer Science','Software Engineering','Artificial Intelligence','Data Science','Cyber Security','Information Security','Electrical Engineering','Mechanical Engineering','Civil Engineering','Aerospace Engineering','Avionics Engineering','Chemical Engineering','Biomedical Engineering','Architecture','Business Administration','Economics'], fee:'50,000–100,000', merit:'85–95%', entryTest:'NET', difficulty:90, color:'#10b981' },
+  { id:'comsats', name:'COMSATS University Islamabad', short:'CUI', city:'Multiple Cities', type:'cs-it', category:'public', depts:['Computer Science','Software Engineering','AI','Data Science','Cyber Security','Electrical Engineering','Civil Engineering','Chemical Engineering','Mechanical Engineering','Business Administration','Economics','Mathematics','Statistics'], fee:'40,000–80,000', merit:'70–88%', entryTest:'NTS/Own', difficulty:65, color:'#8b5cf6' },
+  { id:'airuniversity', name:'Air University', short:'AU', city:'Islamabad', type:'cs-it', category:'public', depts:['Computer Science','Software Engineering','AI','Data Science','Cyber Security','Electrical Engineering','Mechatronics Engineering','Aerospace Engineering','Business Administration','Economics'], fee:'60,000–100,000', merit:'75–90%', entryTest:'Own Test', difficulty:78, color:'#06b6d4' },
+  { id:'ist', name:'Institute of Space Technology', short:'IST', city:'Islamabad', type:'cs-it', category:'public', depts:['Computer Science','AI','Data Science','Cyber Security','Electrical Engineering','Aerospace Engineering','Avionics Engineering','Mechanical Engineering','Space Science'], fee:'40,000–80,000', merit:'78–92%', entryTest:'NET/Own', difficulty:82, color:'#6366f1' },
+  { id:'uok', name:'University of Karachi', short:'KU', city:'Karachi', type:'cs-it', category:'public', depts:['Computer Science','Software Engineering','Electrical Engineering','Chemical Engineering','Business Administration','Economics','Psychology','Physics','Mathematics','Biochemistry','Biotechnology','Mass Communication'], fee:'15,000–35,000', merit:'60–82%', entryTest:'NTS/Matric', difficulty:55, color:'#f59e0b' },
+  { id:'ned', name:'NED University of Engineering and Technology', short:'NED', city:'Karachi', type:'cs-it', category:'public', depts:['Computer Science','Software Engineering','Computer and Information Systems Engineering','AI','Data Science','Cyber Security','Electrical Engineering','Mechanical Engineering','Civil Engineering','Chemical Engineering','Biomedical Engineering','Architecture','Urban and Regional Planning'], fee:'20,000–50,000', merit:'80–92%', entryTest:'ECAT', difficulty:80, color:'#ef4444' },
+  { id:'iqra', name:'Iqra University', short:'IU', city:'Karachi', type:'cs-it', category:'private', depts:['Computer Science','Software Engineering','AI','Data Science','Business Administration','Marketing','Media Studies','Fashion Design','Textile Design'], fee:'60,000–100,000', merit:'60–78%', entryTest:'Own', difficulty:50, color:'#ec4899' },
+  { id:'bahria', name:'Bahria University', short:'BU', city:'Multiple Cities', type:'cs-it', category:'private', depts:['Computer Science','Software Engineering','AI','Data Science','Cyber Security','Electrical Engineering','Mechanical Engineering','Business Administration','Law','International Relations','Psychology'], fee:'70,000–110,000', merit:'70–87%', entryTest:'NTS/Own', difficulty:68, color:'#14b8a6' },
+
+  // Engineering
+  { id:'pieas', name:'PIEAS', short:'PIEAS', city:'Islamabad', type:'engineering', category:'public', depts:['Electrical Engineering','Mechanical Engineering','Chemical Engineering','Nuclear Engineering','Systems Engineering','Materials Engineering','Computer and Information Sciences'], fee:'10,000–30,000', merit:'88–96%', entryTest:'NET/Own', difficulty:93, color:'#22c55e' },
+  { id:'giki', name:'GIK Institute', short:'GIKI', city:'Topi, KPK', type:'engineering', category:'private', depts:['Electrical Engineering','Mechanical Engineering','Civil Engineering','Chemical Engineering','Computer Engineering','Engineering Sciences'], fee:'120,000–160,000', merit:'80–92%', entryTest:'SAT/NET', difficulty:87, color:'#f97316' },
+  { id:'uetlahore', name:'UET Lahore', short:'UET LHR', city:'Lahore', type:'engineering', category:'public', depts:['Electrical Engineering','Mechanical Engineering','Civil Engineering','Chemical Engineering','Computer Engineering','Mechatronics','Petroleum Engineering','Metallurgical Engineering','Architecture'], fee:'25,000–60,000', merit:'82–93%', entryTest:'ECAT', difficulty:84, color:'#a855f7' },
+  { id:'muet', name:'Mehran University (MUET)', short:'MUET', city:'Jamshoro', type:'engineering', category:'public', depts:['Electrical Engineering','Mechanical Engineering','Civil Engineering','Electronic Engineering','Computer Systems Engineering','Software Engineering','Telecom Engineering','Petroleum Engineering','Architecture'], fee:'15,000–40,000', merit:'72–88%', entryTest:'ECAT', difficulty:72, color:'#0ea5e9' },
+  { id:'uettaxila', name:'UET Taxila', short:'UET TXL', city:'Taxila', type:'engineering', category:'public', depts:['Electrical Engineering','Mechanical Engineering','Civil Engineering','Electronic Engineering','Computer Engineering','Software Engineering','Telecom Engineering'], fee:'20,000–50,000', merit:'74–88%', entryTest:'ECAT', difficulty:74, color:'#84cc16' },
+
+  // Business
+  { id:'lums', name:'LUMS', short:'LUMS', city:'Lahore', type:'business', category:'private', depts:['Business Administration','Accounting and Finance','Economics','Management Science','Entrepreneurship','Public Management','Law (LLB)'], fee:'180,000–250,000', merit:'88–96%', entryTest:'LCAT/SAT', difficulty:93, color:'#d4a847' },
+  { id:'iba', name:'IBA Karachi', short:'IBA', city:'Karachi', type:'business', category:'public', depts:['Business Administration','Accounting and Finance','Economics','Social Sciences','Computer Science','Entrepreneurship'], fee:'80,000–130,000', merit:'85–94%', entryTest:'Own Test', difficulty:90, color:'#059669' },
+  { id:'szabist', name:'SZABIST', short:'SZABIST', city:'Multiple Cities', type:'business', category:'private', depts:['Business Administration','Management Sciences','Marketing','Human Resource Management','Economics','Media Sciences','Computer Science', ,'BS Artificial Intelligence ', 'Software Engineering','Law (LLB)'], fee:'155,000–170,000', merit:'71–84%', entryTest:'Own', difficulty:65, color:'#7c3aed' },
+  { id:'sukkuriba', name:'Sukkur IBA University', short:'SIBU', city:'Sukkur', type:'business', category:'public', depts:['Business Administration','Accounting and Finance','Economics','Entrepreneurship','Computer Science'], fee:'15,000–35,000', merit:'65–82%', entryTest:'Own/NTS', difficulty:62, color:'#b45309' },
+
+  // Medical
+  { id:'aku', name:'Aga Khan University', short:'AKU', city:'Karachi', type:'medical', category:'private', depts:['MBBS','School of Nursing and Midwifery','MSc Epidemiology','Health Policy and Management','PhD Health Sciences'], fee:'500,000–700,000', merit:'90–97%', entryTest:'MBBS Test', difficulty:96, color:'#dc2626' },
+  { id:'duhs', name:'Dow University of Health Sciences', short:'DUHS', city:'Karachi', type:'medical', category:'public', depts:['MBBS','BDS','Pharm-D','Nursing','Public Health','Medical Technology','DPT','Biomedical Engineering'], fee:'30,000–80,000', merit:'85–93%', entryTest:'MDCAT', difficulty:88, color:'#be185d' },
+  { id:'kemu', name:'King Edward Medical University', short:'KEMU', city:'Lahore', type:'medical', category:'public', depts:['MBBS','BDS','Nursing','Allied Health Sciences','Public Health'], fee:'25,000–60,000', merit:'87–95%', entryTest:'MDCAT', difficulty:90, color:'#9333ea' },
+  { id:'ziauddin', name:'Ziauddin University', short:'ZU', city:'Karachi', type:'medical', category:'private', depts:['MBBS','BDS','Pharm-D','Nursing','DPT','Medical Technology','Biomedical Engineering'], fee:'200,000–400,000', merit:'78–90%', entryTest:'MDCAT', difficulty:82, color:'#0891b2' },
+
+  // Arts
+  { id:'nca', name:'National College of Arts', short:'NCA', city:'Lahore', type:'arts', category:'public', depts:['Fine Arts','Visual Communication Design','Textile Design','Fashion Design','Industrial Design','Architecture','Film and Television','Multimedia Arts'], fee:'30,000–70,000', merit:'Portfolio-based', entryTest:'Portfolio + Test', difficulty:70, color:'#f59e0b' },
+  { id:'indus', name:'Indus Valley School', short:'IVS', city:'Karachi', type:'arts', category:'private', depts:['Fine Arts','Communication Design','Textile Design','Fashion Design','Interior Design','Architecture'], fee:'80,000–120,000', merit:'Portfolio-based', entryTest:'Portfolio', difficulty:72, color:'#f97316' },
+
+  // Agriculture
+  { id:'uaf', name:'University of Agriculture Faisalabad', short:'UAF', city:'Faisalabad', type:'agriculture', category:'public', depts:['Agriculture','Agronomy','Horticulture','Plant Pathology','Soil Science','Agricultural Engineering','Food Science and Technology','Animal Sciences','Forestry'], fee:'20,000–50,000', merit:'65–80%', entryTest:'FSC/NTS', difficulty:60, color:'#16a34a' },
+  { id:'uvas', name:'University of Veterinary and Animal Sciences', short:'UVAS', city:'Lahore', type:'agriculture', category:'public', depts:['Doctor of Veterinary Medicine','Animal Sciences','Poultry Science','Dairy Technology','Veterinary Pharmacy','Food Safety and Quality Management'], fee:'25,000–55,000', merit:'70–84%', entryTest:'Own/NTS', difficulty:65, color:'#15803d' },
+
+  // General/Social Sciences
+  { id:'qau', name:'Quaid-e-Azam University', short:'QAU', city:'Islamabad', type:'general', category:'public', depts:['Economics','Sociology','Political Science','International Relations','Psychology','Defense and Strategic Studies','History','English','Philosophy','Law (LLB)'], fee:'10,000–25,000', merit:'68–85%', entryTest:'NTS/Own', difficulty:70, color:'#1d4ed8' },
+  { id:'pu', name:'University of the Punjab', short:'PU', city:'Lahore', type:'general', category:'public', depts:['Economics','Sociology','Political Science','International Relations','Psychology','History','English','Law (LLB)','Mass Communication','Geography'], fee:'12,000–28,000', merit:'62–80%', entryTest:'NTS', difficulty:60, color:'#1e40af' },
+  { id:'iiu', name:'International Islamic University', short:'IIUI', city:'Islamabad', type:'general', category:'public', depts:['Economics','Political Science','International Relations','Islamic Studies','Shariah and Law','Arabic','English','Media and Communication Studies'], fee:'15,000–35,000', merit:'62–78%', entryTest:'NTS', difficulty:60, color:'#065f46' },
+  { id:'gcu', name:'Government College University Lahore', short:'GCU', city:'Lahore', type:'general', category:'public', depts:['Economics','Sociology','Political Science','History','English','Urdu','Philosophy','Islamic Studies','Media Studies'], fee:'8,000–20,000', merit:'65–82%', entryTest:'NTS/FSC', difficulty:65, color:'#78350f' },
+  { id:'uos', name:'University of Sindh', short:'SU', city:'Jamshoro', type:'general', category:'public', depts:['Economics','Sociology','Political Science','International Relations','Psychology','History','English','Urdu','Sindhi','Law (LLB)','Media and Communication Studies'], fee:'10,000–22,000', merit:'58–76%', entryTest:'NTS', difficulty:55, color:'#831843' },
+];
+
+const SCHOLARSHIPS = [
+  { id:'hec-nsp', name:'HEC Need-Based Scholarship', org:'Higher Education Commission', type:'hec', icon:'📚', amount:'Full Tuition', deadline:'August annually', tags:['Need-Based','Undergraduate','Full Tuition'], eligibility:'Family income < 45,000/month, enrolled at HEC-recognized university' },
+  { id:'hec-indigenous', name:'HEC Indigenous 5000 Scholarships', org:'Higher Education Commission', type:'hec', icon:'🎓', amount:'Full Support', deadline:'September annually', tags:['Merit','PhD/MS','Overseas'], eligibility:'Pakistani nationals with excellent academic record for MS/PhD' },
+  { id:'hec-overseas', name:'HEC Overseas Scholarships', org:'Higher Education Commission', type:'hec', icon:'✈️', amount:'Full Package', deadline:'November annually', tags:['Overseas','PhD','Research'], eligibility:'MS/PhD abroad in top universities, work experience required for some' },
+  { id:'hec-merit', name:'HEC Merit Scholarship', org:'Higher Education Commission', type:'hec', icon:'⭐', amount:'Partial–Full', deadline:'June annually', tags:['Merit','Undergraduate'], eligibility:'Top positions in FSC/Matric, enrolled at public sector universities' },
+  { id:'seef', name:'Sindh Educational Endowment Fund (SEEF)', org:'Govt of Sindh', type:'sindh', icon:'🌊', amount:'Up to 100,000/yr', deadline:'November annually', tags:['Need-Based','Sindh','Undergrad'], eligibility:'Sindh domicile, income-based, enrolled at recognized university' },
+  { id:'sindh-gov', name:'Sindh Govt Scholarship', org:'Sindh Education Department', type:'sindh', icon:'🏛️', amount:'Varies', deadline:'October annually', tags:['Sindh','Provincial','Undergrad'], eligibility:'Sindh domicile, FSC with good grades, need-based criteria' },
+  { id:'peef', name:'Punjab Educational Endowment Fund (PEEF)', org:'Govt of Punjab', type:'punjab', icon:'🌾', amount:'Up to 80,000/yr', deadline:'October annually', tags:['Need-Based','Punjab','Undergrad'], eligibility:'Punjab domicile, family income < 30,000/month, enrolled at recognized university' },
+  { id:'honhaar', name:'Honhaar Scholarship Program', org:'Govt of Punjab', type:'punjab', icon:'🏆', amount:'Up to 60,000/yr', deadline:'September annually', tags:['Merit','Punjab','Undergrad'], eligibility:'Top FSC positions from Punjab boards, merit-based allocation' },
+  { id:'kpk-eduf', name:'KPK Educational Foundation Scholarships', org:'KPK Higher Education Dept', type:'kpk', icon:'🏔️', amount:'Up to 70,000/yr', deadline:'August annually', tags:['KPK','Need-Based','Undergrad'], eligibility:'KPK domicile, financial need demonstrated, enrolled at recognized university' },
+  { id:'baloch-gov', name:'Balochistan Govt Scholarships', org:'Balochistan Education Dept', type:'balochistan', icon:'🌍', amount:'Up to 100,000/yr', deadline:'September annually', tags:['Balochistan','Need-Based','Priority'], eligibility:'Balochistan domicile, priority to underdeveloped districts' },
+  { id:'overseas-full', name:'Overseas Merit Scholarship (Turkey/China)', org:'HEC / Foreign Govt', type:'overseas', icon:'🌐', amount:'Full Package', deadline:'February annually', tags:['Overseas','Govt-to-Govt','MS/BS'], eligibility:'Pakistani national, top grades, accepted by foreign university/program' },
+  { id:'daad', name:'DAAD German Academic Exchange', org:'DAAD / HEC', type:'overseas', icon:'🇩🇪', amount:'Full Package', deadline:'October annually', tags:['Germany','MS/PhD','Research'], eligibility:'BS degree with high CGPA, German/English language, research proposal' },
+];
+
+// ══════════════════════════════════════════════
+// AI RESPONSES (Mock intelligent responses)
+// ══════════════════════════════════════════════
+
+const AI_RESPONSES = {
+  default: (q) => {
+    const lower = q.toLowerCase();
+    if (lower.includes('nust') || lower.includes('net')) return getNetResponse();
+    if (lower.includes('lums')) return getLumsResponse();
+    if (lower.includes('iba')) return getIbaResponse();
+    if (lower.includes('scholarship') || lower.includes('hec') || lower.includes('seef') || lower.includes('peef')) return getScholarshipResponse();
+    if (lower.includes('cs') || lower.includes('computer science') || lower.includes('roadmap')) return getCsRoadmapResponse();
+    if (lower.includes('mbbs') || lower.includes('medical') || lower.includes('mdcat')) return getMedicalResponse();
+    if (lower.includes('issb') || lower.includes('pma') || lower.includes('army')) return getIssbResponse();
+    if (lower.includes('css') || lower.includes('civil service')) return getCssResponse();
+    if (lower.includes('urdu') || lower.includes('اردو') || lower.includes('پاکستان')) return getUrduResponse();
+    return getGeneralResponse(q);
+  }
+};
+
+function getNetResponse() {
+  return `**NUST NET Preparation Guide**
+
+NUST NET is one of Pakistan's most competitive entry tests. Here's a complete strategy:
+
+📊 **Test Structure:**
+• Total Marks: 200 (NET-1) / 100 (NET-3)
+• Physics: 40 marks | Chemistry: 30 | Math: 80 | English: 30 | IQ: 20
+
+🎯 **Merit Formula:**
+\`NET Score × 0.75 + FSC × 0.15 + Matric × 0.10\`
+
+📚 **Preparation Strategy:**
+1. **Physics** — Focus on mechanics, electromagnetism, modern physics. Use Halliday & Resnick.
+2. **Mathematics** — Strong calculus and algebra needed. Practice 50+ problems daily.
+3. **Chemistry** — Organic chemistry is crucial. KIPS/AceYourExam notes work well.
+4. **English** — Vocabulary, analogies, reading comprehension.
+5. **IQ** — Pattern recognition, logical reasoning — practice daily.
+
+⏱️ **Timeline:** Start 6 months before the test. Target 2 full-length mocks per week in the final month.
+
+💡 **Top Tip:** NUST NET has negative marking (-0.25). Attempt only confident answers.
+
+Would you like a week-by-week study schedule?`;
+}
+
+function getLumsResponse() {
+  return `**LUMS Admissions — Complete Guide**
+
+LUMS is Pakistan's #1 private university. Highly competitive but very rewarding.
+
+🏛️ **Programs & Entry Requirements:**
+| Program | Test | Approx. Merit |
+|---------|------|---------------|
+| BBA/BSc Econ | LCAT/SAT | 85–95% |
+| BSc CS | LCAT/SAT | 82–92% |
+| BSc Law | LCAT | 80–90% |
+
+📝 **LCAT (LUMS Common Admission Test):**
+• Quantitative Reasoning (40%)
+• Verbal Reasoning (30%)
+• Critical Thinking (30%)
+• Duration: 3 hours
+
+💰 **Fees:** ~PKR 180,000–250,000/semester
+**Financial Aid:** LUMS offers need-based grants. ~40% of students receive aid.
+
+🎯 **Application Checklist:**
+✅ FSC/A-Level transcripts
+✅ LCAT or SAT score
+✅ Personal Statement (very important!)
+✅ 2 recommendation letters
+✅ Interview (shortlisted candidates)
+
+💡 **Insider Tip:** LUMS values your personal statement heavily. Spend 2–3 weeks perfecting it.
+
+Want help with the personal statement or LCAT preparation?`;
+}
+
+function getIbaResponse() {
+  return `**IBA Karachi — Admissions Guide**
+
+IBA is Pakistan's oldest and most prestigious business school. Government-subsidized fees with Harvard-level rigor.
+
+📊 **Departments:** BBA, MBA, BS Economics, BS CS, BS Social Sciences
+
+📝 **IBA Entry Test (Very Competitive):**
+• Mathematics (50%): Algebra, calculus, statistics
+• English (30%): Vocabulary, comprehension, grammar
+• Analytical (20%): Logical reasoning
+
+🎓 **Merit:** Top 5% of applicants selected
+**Average Score Needed:** 70%+ in entry test
+
+💰 **Fees:** ~PKR 80,000–130,000/semester
+**IBA Scholarship:** Need-based, covers up to 100% tuition
+
+📋 **Application Process:**
+1. Apply online at iba.edu.pk
+2. Clear entry test (held twice/year)
+3. Group discussion round
+4. Interview with faculty panel
+
+💡 **Pro Tip:** IBA tests are very math-heavy. Practice quantitative aptitude daily for 3 months minimum.`;
+}
+
+function getScholarshipResponse() {
+  return `**Scholarships for Pakistani Students**
+
+Here's a comprehensive overview of available scholarships:
+
+🏛️ **HEC Scholarships:**
+• **Need-Based Scholarship** — Full tuition for students with family income < PKR 45,000/month
+• **Indigenous 5000** — Fully-funded MS/PhD scholarships
+• **Overseas Scholarships** — PhD abroad (Europe, US, China)
+
+🌊 **Sindh — SEEF:**
+• Up to PKR 100,000/year
+• Sindh domicile required
+• Applications open: November each year
+• Apply at: seef.edu.pk
+
+🌾 **Punjab — PEEF & Honhaar:**
+• PEEF: Need-based, up to PKR 80,000/year
+• Honhaar: Merit-based, top FSC positions
+• Apply at: peef.org.pk
+
+🏔️ **KPK & Balochistan:**
+• Strong need-based programs with priority to underdeveloped areas
+• Often overlooked — highly recommended to apply!
+
+📋 **General Documents Required:**
+✅ CNIC (own + parents)
+✅ Income certificate (Union Council verified)
+✅ Domicile certificate
+✅ Academic transcripts
+✅ Admission letter from university
+✅ Bank account details
+
+💡 **Top Tip:** Apply to MULTIPLE scholarships simultaneously. Many students miss deadlines — set reminders!
+
+Which scholarship would you like detailed step-by-step guidance on?`;
+}
+
+function getCsRoadmapResponse() {
+  return `**Computer Science Career Roadmap — Pakistan**
+
+**Phase 1: Beginner (Semesters 1–2)**
+• Core: Programming fundamentals (Python/C++), Discrete Math, Calculus
+• Tools: VS Code, GitHub basics
+• Goal: Build 2–3 small projects
+
+**Phase 2: Intermediate (Semesters 3–5)**
+• Data Structures & Algorithms (most critical!)
+• OOP, Database Systems, Operating Systems
+• Web Dev: HTML/CSS/JS + React or Django
+• Start competitive programming (Codeforces/LeetCode)
+
+**Phase 3: Advanced (Semesters 6–8)**
+• Choose specialization: AI/ML, Web Dev, Cybersecurity, or Mobile Dev
+• AI: Python + TensorFlow/PyTorch + ML fundamentals
+• Cybersecurity: Networking, ethical hacking, CEH certification
+• Contribute to open source projects
+
+**Phase 4: Career**
+• Build strong GitHub portfolio
+• Target internships in semester 5 onwards
+• Freelancing: Upwork/Fiverr — Web dev & ML highly sought
+
+💰 **Salary Ranges:**
+• Fresh Graduate (Pakistan): PKR 60,000–120,000/month
+• 3+ Years Experience: PKR 200,000–500,000/month
+• Overseas/Remote: $2,000–8,000/month
+
+🏢 **Top Employers:** Systems Ltd, 10Pearls, Arbisoft, Netsol, TRG, Careem (remote)
+
+Want a roadmap for a specific specialization like AI or Cybersecurity?`;
+}
+
+function getMedicalResponse() {
+  return `**MBBS Admissions in Pakistan — Complete Guide**
+
+**Top Public Medical Universities:**
+| University | City | Annual Fees | MDCAT Cutoff |
+|-----------|------|-------------|--------------|
+| KEMU | Lahore | ~40,000 | 85%+ |
+| DUHS | Karachi | ~50,000 | 83%+ |
+| SZMC | Islamabad | ~45,000 | 84%+ |
+
+**Private (Expensive but Less Competitive):**
+| University | Annual Fees | MDCAT Cutoff |
+|-----------|-------------|--------------|
+| AKU | 5,00,000+ | 90%+ |
+| Ziauddin | 3,50,000+ | 78%+ |
+
+📝 **MDCAT Syllabus:**
+• Biology (40%) — Most important!
+• Chemistry (30%)
+• Physics (20%)
+• English (10%)
+
+🎯 **Merit Formula:**
+\`MDCAT × 50% + FSC × 40% + Matric × 10%\`
+
+**Minimum MDCAT Score to Qualify:** 55% (PMC requirement)
+
+📅 **Timeline:**
+• MDCAT registration: June–July
+• Test date: Usually September
+• Merit lists: October–November
+
+💡 **MDCAT Tips:**
+1. Focus heavily on Biology — it makes or breaks your merit
+2. PMC question bank is essential
+3. Attempt all questions (no negative marking in MDCAT)`;
+}
+
+function getIssbResponse() {
+  return `**ISSB Preparation — Complete Guide**
+
+ISSB (Inter Services Selection Board) is held at Kohat, Gujranwala, and Malir for Army, Navy, and Air Force officer selection.
+
+**4-Day ISSB Program:**
+**Day 1:** Registration, Initial Tests
+• Intelligence Test (Verbal + Non-verbal)
+• Picture Perception and Discussion Test (PPDT)
+
+**Day 2–3:** Psychological Tests + GTO
+• Word Association Test (WAT): 60 words in 15 minutes
+• Situation Reaction Test (SRT): 60 situations in 30 minutes
+• GTO: Group Planning, Progressive Group Tasks, Command Task
+
+**Day 4:** IO Interview
+• Personal background, family, academics
+• Current affairs (Pakistan + International)
+• Personality assessment
+
+🎯 **Key Tips:**
+1. **Natural behavior** — ISSB tests authenticity, don't pretend
+2. **Physical fitness** — Running, push-ups, chin-ups daily
+3. **Leadership** — Show initiative in GTO, not dominance
+4. **Current affairs** — Read Dawn/The News daily for 3 months
+5. **Intelligence tests** — Practice IQ books, speed matters
+
+💡 **Common Reasons for Rejection:**
+• Inconsistency between psychology tests and interview
+• Poor physical performance
+• Lying about background
+
+Want a 3-month day-by-day ISSB preparation schedule?`;
+}
+
+function getCssResponse() {
+  return `**CSS Exam Preparation Guide**
+
+CSS (Central Superior Services) — Pakistan's most prestigious competitive exam, conducted by FPSC.
+
+📊 **Exam Structure:**
+• Compulsory subjects: 6 papers (600 marks)
+• Optional subjects: 4 papers (600 marks)  
+• Viva Voce: 300 marks
+• **Total: 1,500 marks**
+
+📚 **Compulsory Papers:**
+1. Essay (100 marks)
+2. English Précis & Composition (100)
+3. General Science & Ability (100)
+4. Current Affairs (100)
+5. Pakistan Affairs (100)
+6. Islamic Studies/Ethics (100)
+
+🎯 **Best Optional Combinations:**
+• **Social Sciences:** IR + Political Science + Sociology + Economics
+• **Law:** Constitutional Law + IR + Public Admin + Political Science
+• **Science:** Physics/Comp. Science + Math + Statistics + IR
+
+📅 **Timeline:**
+• Notification: Usually December
+• Written Exam: February–April
+• Results: July–August
+• Viva: October–November
+
+💡 **Recommended Resources:**
+• Dawn Editorial (daily — mandatory)
+• Pakistan Affairs: Ikram Rabbani
+• Current Affairs: Monthly magazines
+• Essay: Practice 2 essays/week from past papers
+
+📈 **Pass Rate:** ~2–3% only. Requires 2–3 years of dedicated preparation.
+
+Want a 12-month CSS study plan?`;
+}
+
+function getUrduResponse() {
+  return `**پاکستانی طلبہ کے لیے رہنمائی**
+
+آپ کا سوال اردو میں موصول ہوا۔ EduPathPK اردو اور انگریزی دونوں زبانوں میں مدد کرتا ہے۔
+
+**داخلہ کے بارے میں سوال کریں:**
+• یونیورسٹی میرٹ
+• داخلہ ٹیسٹ کی تیاری
+• اسکالرشپ
+• کیریئر گائیڈنس
+
+کیا آپ یہ جاننا چاہتے ہیں:
+1. نوسٹ، فاسٹ، یا آئی بی اے کا داخلہ؟
+2. این ای ٹی، ای کیٹ، یا ایم ڈی کیٹ کی تیاری؟
+3. ایچ ای سی یا صوبائی اسکالرشپ؟
+
+براہ کرم اپنا سوال پوچھیں — میں مکمل رہنمائی فراہم کروں گا۔`;
+}
+
+function getGeneralResponse(q) {
+  return `**EduPathPK — Your Education Guide**
+
+Thank you for your question about: *"${q.substring(0,60)}..."*
+
+I can help you with comprehensive guidance on:
+
+🏛️ **50+ Universities** — Admissions, merit trends, fees, departments
+📝 **Entry Tests** — NUST NET, LUMS LCAT, MDCAT, ECAT, FAST NU test
+🗺️ **Career Roadmaps** — Step-by-step paths for every department
+🎓 **Scholarships** — HEC, PEEF, SEEF, KPKEF, Balochistan, Overseas
+🎖️ **ISSB/PMA** — Complete 4-day program preparation
+⚖️ **CSS Exam** — Subject selection, study plans, past paper strategy
+
+Please try asking something specific like:
+• *"NUST Computer Science merit and preparation"*
+• *"HEC scholarship eligibility and application"*
+• *"Software Engineering career roadmap"*
+• *"ISSB psychological test tips"*
+
+I respond in both **English and Urdu** 🇵🇰`;
+}
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+
+let currentSection = 'chat';
+let queriesUsed = 2;
+let freeQueries = 5;
+let isPro = false;
+let selectedUnis = [null, null, null];
+let currentPickerSlot = 0;
+let currentLang = 'EN';
+
+// ══════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════
+
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  
+  document.getElementById('section-' + id).classList.add('active');
+  
+  const titles = {
+    chat: ['AI Assistant', 'Ask anything about admissions & career'],
+    universities: ['Universities', 'Browse 50+ universities across Pakistan'],
+    compare: ['Compare Universities', 'Side-by-side comparison of up to 3 universities'],
+    roadmap: ['Career Roadmap', 'Step-by-step paths from beginner to career'],
+    entrytests: ['Entry Tests', 'Comprehensive test preparation guides'],
+    issb: ['ISSB / PMA', 'Pakistan military service selection preparation'],
+    css: ['CSS Exam', 'Central Superior Services preparation'],
+    scholarships: ['Scholarships', 'HEC, provincial, and overseas financial aid'],
+  };
+
+  const [title, breadcrumb] = titles[id] || ['EduPathPK', ''];
+  document.getElementById('pageTitle').textContent = title;
+  document.getElementById('pageBreadcrumb').textContent = breadcrumb;
+
+  // activate nav
+  document.querySelectorAll('.nav-item').forEach(btn => {
+    if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(`'${id}'`)) {
+      btn.classList.add('active');
+    }
+  });
+
+  currentSection = id;
+
+  if (id === 'universities' && !document.getElementById('uniGrid').children.length) renderUnis();
+  if (id === 'scholarships' && !document.getElementById('scholGrid').children.length) renderSchols();
+  if (id === 'roadmap') populateRoadmapSelects();
+}
+
+// ══════════════════════════════════════════════
+// CHAT
+// ══════════════════════════════════════════════
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  document.getElementById('langEN').classList.toggle('active', lang === 'EN');
+  document.getElementById('langUR').classList.toggle('active', lang === 'UR');
+  document.getElementById('chatInput').placeholder = lang === 'UR' 
+    ? 'اپنا سوال اردو میں لکھیں...'
+    : 'Ask about admissions, entry tests, scholarships, careers...';
+}
+
+function sendChip(text) {
+  document.getElementById('chatInput').value = text;
+  sendMessage();
+}
+
+function askAbout(text) {
+  showSection('chat');
+  document.getElementById('chatInput').value = text;
+  sendMessage();
+}
+
+function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  if (!isPro && queriesUsed >= freeQueries) {
+    openPayment();
+    return;
+  }
+
+  // Hide welcome
+  document.getElementById('chatWelcome').style.display = 'none';
+
+  const msgs = document.getElementById('chatMessages');
+
+  // User message
+  const now = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  msgs.innerHTML += `
+    <div class="msg user">
+      <div>
+        <div class="msg-bubble">${escHtml(msg)}</div>
+        <div class="msg-time">${now}</div>
+      </div>
+      <div class="msg-avatar human">U</div>
+    </div>`;
+
+  input.value = '';
+  input.style.height = 'auto';
+  msgs.scrollTop = msgs.scrollHeight;
+
+  // Typing indicator
+  const typingId = 'typing_' + Date.now();
+  msgs.innerHTML += `
+    <div class="msg ai" id="${typingId}">
+      <div class="msg-avatar ai">E</div>
+      <div class="msg-bubble">
+        <div class="loading-spinner">
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+        </div>
+      </div>
+    </div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+
+  const delay = 1000 + Math.random() * 800;
+  
+  setTimeout(() => {
+    const typingEl = document.getElementById(typingId);
+    if (typingEl) typingEl.remove();
+
+    queriesUsed++;
+    const left = Math.max(0, freeQueries - queriesUsed);
+    document.getElementById('queryLeft').textContent = left;
+    if (left <= 1 && !isPro) document.getElementById('queryLeft').style.color = 'var(--ruby)';
+
+    const response = AI_RESPONSES.default(msg);
+    const formattedResponse = formatResponse(response);
+
+    msgs.innerHTML += `
+      <div class="msg ai">
+        <div class="msg-avatar ai">E</div>
+        <div>
+          <div class="msg-bubble">${formattedResponse}</div>
+          <div class="msg-time">${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div>
+        </div>
+      </div>`;
+    msgs.scrollTop = msgs.scrollHeight;
+
+    if (!isPro && queriesUsed >= freeQueries) {
+      setTimeout(() => {
+        msgs.innerHTML += `
+          <div class="msg ai">
+            <div class="msg-avatar ai">E</div>
+            <div>
+              <div class="msg-bubble" style="background: var(--gold-dim); border-color: rgba(212,168,71,0.3);">
+                ⭐ You've used all 5 free queries. <strong>Upgrade to Pro for PKR 799/month</strong> to continue with unlimited access.
+                <br><br>
+                <button onclick="openPayment()" style="background:linear-gradient(135deg,var(--gold),#e8b840);color:#1a1000;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">Upgrade Now →</button>
+              </div>
+            </div>
+          </div>`;
+        msgs.scrollTop = msgs.scrollHeight;
+      }, 500);
+    }
+  }, delay);
+}
+
+function formatResponse(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/`(.*?)`/g, '<code style="background:var(--bg3);padding:1px 5px;border-radius:4px;font-family:\'JetBrains Mono\',monospace;font-size:12px;">$1</code>')
+    .replace(/\|(.+)\|/g, (m) => {
+      const cells = m.split('|').filter(c => c.trim() && !c.trim().match(/^[-:]+$/));
+      if (cells.length < 2) return m;
+      return '<div style="overflow-x:auto;margin:8px 0"><table style="border-collapse:collapse;width:100%;font-size:12px">' +
+        cells.map((c,i) => `<td style="padding:6px 10px;border:1px solid var(--border);${i===0?'font-weight:500;color:var(--text2)':'color:var(--text)'}">${c.trim()}</td>`).join('') +
+        '</table></div>';
+    })
+    .replace(/✅|•/g, '<span style="color:var(--emerald)">•</span>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+}
+
+function escHtml(text) {
+  return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ══════════════════════════════════════════════
+// UNIVERSITIES
+// ══════════════════════════════════════════════
+
+let activeTypeFilter = 'all';
+
+function renderUnis(unis = UNIVERSITIES) {
+  const grid = document.getElementById('uniGrid');
+  grid.innerHTML = unis.map(u => {
+    const deptPreview = u.depts.slice(0, 4);
+    const extra = u.depts.length - 4;
+    const badge = getCategoryBadge(u.type);
+    const initials = u.short.substring(0, 3);
+    return `
+      <div class="uni-card glow-gold" onclick="uniCardClick('${u.id}')">
+        <div class="uni-card-top">
+          <div class="uni-emblem" style="background:${u.color}20;color:${u.color}">${initials}</div>
+          <span class="uni-type-badge ${badge.cls}">${badge.label}</span>
+        </div>
+        <div class="uni-name">${u.name}</div>
+        <div class="uni-city">📍 ${u.city}</div>
+        <div class="uni-stats">
+          <div class="uni-stat">
+            <strong>${u.depts.length}</strong>
+            Departments
+          </div>
+          <div class="uni-stat">
+            <strong style="font-size:12px">${u.merit}</strong>
+            Merit
+          </div>
+          <div class="uni-stat">
+            <strong style="font-size:11px">${u.entryTest}</strong>
+            Test
+          </div>
+        </div>
+        <div class="uni-depts">
+          ${deptPreview.map(d => `<span class="dept-pill">${d}</span>`).join('')}
+          ${extra > 0 ? `<span class="dept-pill more">+${extra} more</span>` : ''}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function uniCardClick(id) {
+  const u = UNIVERSITIES.find(x => x.id === id);
+  if (!u) return;
+  askAbout(`Tell me everything about ${u.name}: departments, admission criteria, fees, merit trends, scholarships, and career prospects for each department.`);
+}
+
+function getCategoryBadge(type) {
+  const map = {
+    'cs-it': { cls: 'badge-private', label: 'CS / IT' },
+    'engineering': { cls: 'badge-engineering', label: 'Engineering' },
+    'business': { cls: 'badge-business', label: 'Business' },
+    'medical': { cls: 'badge-medical', label: 'Medical' },
+    'arts': { cls: 'badge-arts', label: 'Arts & Design' },
+    'general': { cls: 'badge-public', label: 'General' },
+    'agriculture': { cls: 'badge-public', label: 'Agriculture' },
+  };
+  return map[type] || { cls: 'badge-public', label: type };
+}
+
+function filterByType(type, btn) {
+  activeTypeFilter = type;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const searchVal = document.getElementById('uniSearch').value.toLowerCase();
+  applyFilters(searchVal, type);
+}
+
+function filterUnis() {
+  const val = document.getElementById('uniSearch').value.toLowerCase();
+  applyFilters(val, activeTypeFilter);
+}
+
+function applyFilters(search, type) {
+  let filtered = UNIVERSITIES;
+  if (type !== 'all') filtered = filtered.filter(u => u.type === type);
+  if (search) filtered = filtered.filter(u =>
+    u.name.toLowerCase().includes(search) ||
+    u.city.toLowerCase().includes(search) ||
+    u.depts.some(d => d.toLowerCase().includes(search))
+  );
+  renderUnis(filtered);
+}
+
+// ══════════════════════════════════════════════
+// COMPARE
+// ══════════════════════════════════════════════
+
+function openUniPicker(slot) {
+  currentPickerSlot = slot;
+  const modal = document.getElementById('uniPickerModal');
+  modal.classList.add('open');
+  renderPickerList(UNIVERSITIES);
+  document.getElementById('pickerSearch').value = '';
+  document.getElementById('pickerSearch').focus();
+}
+
+function closeUniPicker() {
+  document.getElementById('uniPickerModal').classList.remove('open');
+}
+
+function filterPickerUnis() {
+  const val = document.getElementById('pickerSearch').value.toLowerCase();
+  const filtered = UNIVERSITIES.filter(u =>
+    u.name.toLowerCase().includes(val) || u.city.toLowerCase().includes(val)
+  );
+  renderPickerList(filtered);
+}
+
+function renderPickerList(unis) {
+  document.getElementById('pickerList').innerHTML = unis.map(u => `
+    <div onclick="selectUniForCompare('${u.id}')" style="padding:10px 14px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:10px;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="width:32px;height:32px;border-radius:8px;background:${u.color}20;color:${u.color};display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0;">${u.short.substring(0,3)}</div>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:var(--text)">${u.name}</div>
+        <div style="font-size:11px;color:var(--text3)">${u.city} · ${u.depts.length} depts</div>
+      </div>
+    </div>`).join('');
+}
+
+function selectUniForCompare(id) {
+  selectedUnis[currentPickerSlot] = UNIVERSITIES.find(u => u.id === id);
+  closeUniPicker();
+  updateCompareSlots();
+}
+
+function updateCompareSlots() {
+  for (let i = 0; i < 3; i++) {
+    const slot = document.getElementById('slot' + i);
+    const u = selectedUnis[i];
+    if (u) {
+      slot.classList.add('filled');
+      slot.innerHTML = `
+        <div style="font-size:22px;font-family:'Playfair Display',serif;font-weight:700;color:${u.color}">${u.short}</div>
+        <div class="compare-slot-name">${u.name.length > 28 ? u.name.substring(0,28)+'...' : u.name}</div>
+        <div class="compare-slot-remove" onclick="removeFromCompare(${i}, event)">✕ Remove</div>`;
+      slot.onclick = null;
+    } else {
+      slot.classList.remove('filled');
+      slot.innerHTML = `<div style="font-size:24px;color:var(--text3)">+</div><div class="compare-slot-label">Add University ${i+1}</div>`;
+      slot.onclick = () => openUniPicker(i);
+    }
+  }
+  const filled = selectedUnis.filter(Boolean).length;
+  document.getElementById('compareBtn').disabled = filled < 2;
+  document.getElementById('compareBtn').textContent = filled < 2 ? `Select at least 2 universities (${filled}/2)` : `⚖️ Compare ${filled} Universities`;
+}
+
+function removeFromCompare(i, e) {
+  e.stopPropagation();
+  selectedUnis[i] = null;
+  updateCompareSlots();
+  document.getElementById('compareResult').innerHTML = '';
+}
+
+function generateComparison() {
+  const unis = selectedUnis.filter(Boolean);
+  if (unis.length < 2) return;
+
+  const result = document.getElementById('compareResult');
+
+  const diffColor = (val) => {
+    if (val >= 85) return 'var(--ruby)';
+    if (val >= 75) return 'var(--gold)';
+    return 'var(--emerald)';
+  };
+
+  result.innerHTML = `
+    <div class="compare-table-wrap slide-up">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Criteria</th>
+            ${unis.map(u => `<th style="color:${u.color}">${u.name}</th>`).join('')}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>City</td>
+            ${unis.map(u => `<td>${u.city}</td>`).join('')}
+          </tr>
+          <tr>
+            <td>Type</td>
+            ${unis.map(u => `<td><span class="uni-type-badge ${getCategoryBadge(u.type).cls}">${u.category}</span></td>`).join('')}
+          </tr>
+          <tr>
+            <td>Departments</td>
+            ${unis.map(u => `<td><strong style="color:var(--text)">${u.depts.length}</strong> departments</td>`).join('')}
+          </tr>
+          <tr>
+            <td>Semester Fee</td>
+            ${unis.map(u => `<td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text)">PKR ${u.fee}</td>`).join('')}
+          </tr>
+          <tr>
+            <td>Merit Range</td>
+            ${unis.map(u => `<td>${u.merit}</td>`).join('')}
+          </tr>
+          <tr>
+            <td>Entry Test</td>
+            ${unis.map(u => `<td>${u.entryTest}</td>`).join('')}
+          </tr>
+          <tr>
+            <td>Test Difficulty</td>
+            ${unis.map(u => `
+              <td>
+                <div class="score-bar">
+                  <div class="score-bar-track">
+                    <div class="score-bar-fill gold" style="width:${u.difficulty}%;background:${diffColor(u.difficulty)}"></div>
+                  </div>
+                  <span style="font-size:12px;color:var(--text2)">${u.difficulty}/100</span>
+                </div>
+              </td>`).join('')}
+          </tr>
+          <tr>
+            <td>Scholarship Avail.</td>
+            ${unis.map(u => `<td><span style="color:var(--emerald)">✓</span> ${u.category === 'public' ? 'HEC + Merit + Need-Based' : 'Merit-Based + Own Aid'}</td>`).join('')}
+          </tr>
+          <tr>
+            <td>Notable Programs</td>
+            ${unis.map(u => `<td style="font-size:12px;line-height:1.6">${u.depts.slice(0,4).join(', ')}${u.depts.length > 4 ? ', +more' : ''}</td>`).join('')}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:16px;background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:20px;">
+      <div style="font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;">AI Recommendation</div>
+      <div style="font-size:14px;color:var(--text);line-height:1.7">
+        ${getCompareRecommendation(unis)}
+      </div>
+    </div>`;
+}
+
+function getCompareRecommendation(unis) {
+  const sorted = [...unis].sort((a,b) => b.difficulty - a.difficulty);
+  return `Based on your selection, <strong style="color:var(--gold2)">${sorted[0].name}</strong> is the most competitive (merit/difficulty: ${sorted[0].difficulty}/100), making it the top choice for academically strong students. 
+
+${unis.find(u => u.category === 'public') ? `<strong style="color:var(--emerald)">${unis.find(u => u.category === 'public').name}</strong> offers the most affordable fees as a public university with strong scholarship availability through HEC.` : ''}
+
+For career outcomes, consider which university's location and industry connections align with your target sector. Click "Ask AI" for detailed guidance on any specific university.
+
+<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+${unis.map(u => `<button onclick="askAbout('Complete guidance for ${u.name}: departments, scholarships, career scope')" style="background:var(--bg3);border:1px solid var(--border2);color:var(--text2);padding:6px 14px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--text2)'">Ask about ${u.short} →</button>`).join('')}
+</div>`;
+}
+
+// ══════════════════════════════════════════════
+// ROADMAP
+// ══════════════════════════════════════════════
+
+function populateRoadmapSelects() {
+  const uniSel = document.getElementById('rmUni');
+  if (uniSel.children.length > 1) return;
+  UNIVERSITIES.forEach(u => {
+    const opt = document.createElement('option');
+    opt.value = u.id;
+    opt.textContent = u.name;
+    uniSel.appendChild(opt);
+  });
+
+  uniSel.addEventListener('change', () => {
+    const u = UNIVERSITIES.find(x => x.id === uniSel.value);
+    const deptSel = document.getElementById('rmDept');
+    deptSel.innerHTML = '<option value="">Select Department</option>';
+    if (u) {
+      u.depts.forEach(d => {
+        const opt = document.createElement('option');
+        opt.value = d;
+        opt.textContent = d;
+        deptSel.appendChild(opt);
+      });
+    }
+  });
+}
+
+function generateRoadmap() {
+  const uniId = document.getElementById('rmUni').value;
+  const dept = document.getElementById('rmDept').value;
+  if (!uniId || !dept) { showToast('Please select both university and department'); return; }
+
+  const uni = UNIVERSITIES.find(u => u.id === uniId);
+  const content = document.getElementById('roadmapContent');
+  content.classList.add('visible');
+
+  const roadmapData = getRoadmapData(dept);
+
+  content.innerHTML = `
+    <div style="margin-bottom:24px">
+      <div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">${uni.name}</div>
+      <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--text)">${dept} Roadmap</div>
+    </div>
+
+    <div class="roadmap-timeline">
+      ${roadmapData.phases.map((p, i) => `
+        <div class="roadmap-phase">
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-phase-header">
+            <span class="phase-level level-${p.level}">${p.level}</span>
+            <span class="phase-semester">${p.semester}</span>
+          </div>
+          <div class="phase-title">${p.title}</div>
+          <div class="phase-grid">
+            ${p.cards.map(c => `
+              <div class="phase-card">
+                <div class="phase-card-label">${c.label}</div>
+                <div class="phase-card-items">
+                  ${c.items.map(item => `<div class="phase-item">${item}</div>`).join('')}
+                </div>
+              </div>`).join('')}
+          </div>
+        </div>`).join('')}
+    </div>
+
+    <div class="salary-row">
+      <div class="salary-card">
+        <div class="salary-label">Fresh Graduate (PK)</div>
+        <div class="salary-amount">${roadmapData.salary.fresh}</div>
+        <div class="salary-sub">per month in Pakistan</div>
+      </div>
+      <div class="salary-card">
+        <div class="salary-label">3+ Years (PK)</div>
+        <div class="salary-amount" style="color:var(--gold)">${roadmapData.salary.senior}</div>
+        <div class="salary-sub">per month in Pakistan</div>
+      </div>
+      <div class="salary-card">
+        <div class="salary-label">Remote / Overseas</div>
+        <div class="salary-amount" style="color:var(--sapphire)">${roadmapData.salary.overseas}</div>
+        <div class="salary-sub">per month</div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:20px">
+      <div style="font-size:12px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px">Top Career Roles</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        ${roadmapData.roles.map(r => `<span style="background:var(--bg3);border:1px solid var(--border2);color:var(--text2);padding:5px 12px;border-radius:99px;font-size:12px">${r}</span>`).join('')}
+      </div>
+    </div>`;
+}
+
+function getRoadmapData(dept) {
+  const deptLower = dept.toLowerCase();
+  
+  if (deptLower.includes('computer science') || deptLower.includes('software')) {
+    return {
+      salary: { fresh: '60K–120K', senior: '200K–500K', overseas: '$2K–8K' },
+      roles: ['Software Engineer', 'Full Stack Developer', 'AI/ML Engineer', 'DevOps Engineer', 'Data Scientist', 'Cybersecurity Analyst', 'Product Manager', 'CTO/Tech Lead'],
+      phases: [
+        { level:'beginner', semester:'Sem 1–2', title:'Programming Foundations', cards:[
+          { label:'Core Subjects', items:['Programming Fundamentals (C++/Python)', 'Discrete Mathematics', 'Calculus I & II', 'Physics'] },
+          { label:'Tools to Learn', items:['VS Code / CLion', 'Git & GitHub', 'Linux Basics', 'Terminal Usage'] },
+          { label:'Projects', items:['Simple Calculator (CLI)', 'Student Management System', 'Basic Web Page (HTML/CSS)'] }
+        ]},
+        { level:'intermediate', semester:'Sem 3–5', title:'Core CS Mastery', cards:[
+          { label:'Key Subjects', items:['Data Structures & Algorithms (CRITICAL)', 'Object-Oriented Programming', 'Database Systems (SQL)', 'Operating Systems', 'Computer Networks'] },
+          { label:'Skills to Build', items:['LeetCode Problem Solving (100+ problems)', 'SQL Queries & Database Design', 'REST API Development', 'React/Node.js Basics'] },
+          { label:'Certifications', items:['AWS Cloud Practitioner', 'Google IT Support', 'Meta Front-End Developer'] }
+        ]},
+        { level:'advanced', semester:'Sem 6–8', title:'Specialization & Industry Prep', cards:[
+          { label:'Choose Path', items:['AI/ML: TensorFlow, PyTorch, Scikit-learn', 'Web Dev: React, Node, Docker', 'Cybersecurity: Ethical Hacking, CEH', 'Mobile: React Native / Flutter'] },
+          { label:'Portfolio Projects', items:['Full-Stack Web Application', 'ML Model with Real Dataset', 'Capstone University Project', 'Open Source Contributions'] },
+          { label:'Industry Prep', items:['Internship at tech company', 'LinkedIn profile optimization', 'Competitive programming', 'System design basics'] }
+        ]},
+        { level:'career', semester:'Post-Graduation', title:'Career Launch', cards:[
+          { label:'Pakistan Jobs', items:['Systems Ltd', '10Pearls', 'Arbisoft', 'Netsol Technologies', 'TRG Pakistan', 'Careem', 'Daraz'] },
+          { label:'Freelancing', items:['Upwork / Fiverr', 'Toptal (senior level)', 'Web Development', 'AI/ML Consulting', 'Mobile App Dev'] },
+          { label:'Further Study', items:['MS in CS (abroad or local)', 'PhD Research', 'MBA for management track', 'Specialized bootcamps'] }
+        ]}
+      ]
+    };
+  }
+
+  if (deptLower.includes('electrical') || deptLower.includes('electronic')) {
+    return {
+      salary: { fresh: '50K–100K', senior: '150K–400K', overseas: '$2K–6K' },
+      roles: ['Electrical Engineer', 'Power Systems Engineer', 'Embedded Systems Engineer', 'Telecom Engineer', 'Project Manager', 'Energy Consultant'],
+      phases: [
+        { level:'beginner', semester:'Sem 1–2', title:'EE Foundations', cards:[
+          { label:'Core Subjects', items:['Circuit Theory I & II', 'Engineering Mathematics', 'Physics (E&M)', 'Engineering Drawing'] },
+          { label:'Tools', items:['MATLAB Basics', 'Multisim / Proteus', 'Basic Soldering', 'Oscilloscope Usage'] }
+        ]},
+        { level:'intermediate', semester:'Sem 3–5', title:'Core EE Concepts', cards:[
+          { label:'Key Subjects', items:['Electronics I & II', 'Signals & Systems', 'Digital Logic Design', 'Electromagnetic Theory', 'Microprocessors'] },
+          { label:'Labs & Projects', items:['PCB Design (KiCAD/Eagle)', 'Arduino & Raspberry Pi Projects', 'FPGA Basics (Verilog/VHDL)', 'Power Electronics Lab'] }
+        ]},
+        { level:'advanced', semester:'Sem 6–8', title:'Specialization', cards:[
+          { label:'Choose Path', items:['Power Systems: NEPRA regulations, grid design', 'Telecom: 5G, fiber optics, protocols', 'Embedded: RTOS, IoT, ARM programming', 'Control Systems: PLC, SCADA, automation'] },
+          { label:'Certifications', items:['PEC Registration (mandatory)', 'IEEE membership', 'MATLAB Certified', 'PLC Programming Cert'] }
+        ]},
+        { level:'career', semester:'Post-Graduation', title:'Industry Entry', cards:[
+          { label:'Top Employers', items:['WAPDA / K-Electric', 'PTCL / Telenor / Jazz', 'Pakistan Railways', 'PEL / Siemens / ABB', 'OGDCL / PPL'] },
+          { label:'Freelancing', items:['PCB Design on Upwork', 'IoT Project Development', 'AutoCAD Electrical Drafting', 'Embedded Firmware'] }
+        ]}
+      ]
+    };
+  }
+
+  if (deptLower.includes('business') || deptLower.includes('management') || deptLower.includes('bba')) {
+    return {
+      salary: { fresh: '40K–80K', senior: '150K–500K', overseas: '$1.5K–5K' },
+      roles: ['Business Analyst', 'Marketing Manager', 'Finance Manager', 'HR Manager', 'Entrepreneur', 'Consultant', 'CEO/COO'],
+      phases: [
+        { level:'beginner', semester:'Sem 1–2', title:'Business Foundations', cards:[
+          { label:'Core Subjects', items:['Principles of Management', 'Business Mathematics', 'Introduction to Accounting', 'Business Communication', 'Economics I'] },
+          { label:'Soft Skills', items:['Professional email writing', 'Public speaking', 'MS Excel fundamentals', 'Critical thinking'] }
+        ]},
+        { level:'intermediate', semester:'Sem 3–5', title:'Core Business Skills', cards:[
+          { label:'Key Subjects', items:['Marketing Management', 'Financial Management', 'Human Resource Management', 'Operations Management', 'Business Statistics'] },
+          { label:'Practical Skills', items:['Excel Financial Modeling', 'Digital Marketing (Google Ads)', 'Market Research Methods', 'Case study analysis'] }
+        ]},
+        { level:'advanced', semester:'Sem 6–8', title:'Specialization & Leadership', cards:[
+          { label:'Choose Track', items:['Finance: CFA preparation, investment banking', 'Marketing: Brand management, digital strategy', 'HR: SHRM certification, talent management', 'Entrepreneurship: Startup ecosystem, funding'] },
+          { label:'Industry Exposure', items:['Internship (mandatory)', 'Industry mentorship', 'Business plan competition', 'Networking events'] }
+        ]},
+        { level:'career', semester:'Post-Graduation', title:'Career Paths', cards:[
+          { label:'Corporate Track', items:['Bank Alfalah, HBL, MCB', 'Unilever, P&G, Nestle Pakistan', 'Engro, Lucky Cement, Millat', 'KPMG, Deloitte, EY (audit)'] },
+          { label:'Further Education', items:['MBA (LUMS, IBA, SZABIST)', 'CFA/ACCA for finance', 'CA (ICAP) for accounting', 'MS in Management (abroad)'] }
+        ]}
+      ]
+    };
+  }
+
+  if (deptLower.includes('mbbs') || deptLower.includes('medicine') || deptLower.includes('medical')) {
+    return {
+      salary: { fresh: '80K–150K', senior: '300K–800K', overseas: '$3K–15K' },
+      roles: ['MBBS Doctor', 'General Practitioner', 'Specialist (post-FCPS)', 'Surgeon', 'Medical Researcher', 'Public Health Officer'],
+      phases: [
+        { level:'beginner', semester:'Year 1–2', title:'Pre-Clinical Sciences', cards:[
+          { label:'Core Subjects', items:['Anatomy (most important)', 'Physiology', 'Biochemistry', 'Community Medicine', 'Behavioral Sciences'] },
+          { label:'Study Methods', items:['Flashcard-based learning (Anki)', 'Gray\'s Anatomy for Students', 'Ganong\'s Physiology', 'Clinical skills labs'] }
+        ]},
+        { level:'intermediate', semester:'Year 2–3', title:'Para-Clinical Sciences', cards:[
+          { label:'Key Subjects', items:['Pathology', 'Pharmacology', 'Microbiology', 'Forensic Medicine', 'Ophthalmology'] },
+          { label:'Skills', items:['Clinical examination techniques', 'Patient history taking', 'Diagnostics basics', 'Lab test interpretation'] }
+        ]},
+        { level:'advanced', semester:'Year 4–5', title:'Clinical Rotations', cards:[
+          { label:'Rotations', items:['Internal Medicine', 'Surgery', 'Gynecology & Obstetrics', 'Pediatrics', 'Psychiatry', 'ENT'] },
+          { label:'Exams', items:['USMLE preparation (if abroad)', 'FCPS Part 1 preparation', 'Licensing exam readiness', 'Clinical case presentations'] }
+        ]},
+        { level:'career', semester:'Post-MBBS', title:'Specialization & Career', cards:[
+          { label:'Specializations', items:['FCPS (Fellowship College of Physicians)', 'MRCP / MRCS (UK)', 'MD in USA (USMLE pathway)', 'Research & Academia'] },
+          { label:'Opportunities', items:['Pakistan government hospitals', 'Private hospitals (AKU, South City)', 'Saudi Arabia / UAE / UK', 'NGO / Public Health Work'] }
+        ]}
+      ]
+    };
+  }
+
+  // Default generic roadmap
+  return {
+    salary: { fresh: '50K–90K', senior: '150K–350K', overseas: '$1.5K–5K' },
+    roles: ['Research Analyst', 'Specialist', 'Consultant', 'Project Manager', 'Educator', 'Department Head'],
+    phases: [
+      { level:'beginner', semester:'Sem 1–2', title:'Foundation Year', cards:[
+        { label:'Core Subjects', items:['Introduction to ' + dept, 'Mathematics / Statistics', 'Communication Skills', 'Research Methods I'] },
+        { label:'Essential Skills', items:['Microsoft Office Suite', 'Academic Writing', 'Critical Thinking', 'Time Management'] }
+      ]},
+      { level:'intermediate', semester:'Sem 3–5', title:'Core Knowledge Development', cards:[
+        { label:'Advanced Subjects', items:['Intermediate ' + dept + ' courses', 'Applied Research Methods', 'Professional Ethics', 'Industry-specific software'] },
+        { label:'Practical Learning', items:['Case Study Analysis', 'Guest Lectures', 'Industry Visits', 'Group Projects'] }
+      ]},
+      { level:'advanced', semester:'Sem 6–8', title:'Specialization & Capstone', cards:[
+        { label:'Final Stage', items:['Advanced ' + dept + ' specialization', 'Capstone / Thesis Project', 'Internship (6 months)', 'Professional certification prep'] },
+        { label:'Career Prep', items:['CV/Resume building', 'Interview preparation', 'LinkedIn profile', 'Professional networking'] }
+      ]},
+      { level:'career', semester:'Post-Graduation', title:'Career Launch', cards:[
+        { label:'Opportunities', items:['Government sector positions', 'Private sector careers', 'NGO and development sector', 'Entrepreneurship / Startups'] },
+        { label:'Growth Path', items:['MS/MPhil for research track', 'Professional certifications', 'Leadership development', 'International opportunities'] }
+      ]}
+    ]
+  };
+}
+
+// ══════════════════════════════════════════════
+// SCHOLARSHIPS
+// ══════════════════════════════════════════════
+
+let activeScholarshipFilter = 'all';
+
+function renderSchols(schols = SCHOLARSHIPS) {
+  const grid = document.getElementById('scholGrid');
+  grid.innerHTML = schols.map(s => `
+    <div class="schol-card" onclick="askAbout('Tell me complete details about ${s.name}: eligibility, application process step by step, required documents, deadlines, and tips to secure it')">
+      <div class="schol-card-top">
+        <div class="schol-icon" style="background:var(--gold-dim)">${s.icon}</div>
+        <div class="schol-amount">${s.amount}</div>
+      </div>
+      <div class="schol-name">${s.name}</div>
+      <div class="schol-org">by ${s.org}</div>
+      <div class="schol-tags">
+        ${s.tags.map(t => `<span class="schol-tag">${t}</span>`).join('')}
+      </div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:10px">${s.eligibility}</div>
+      <div class="schol-deadline">
+        <div class="deadline-dot"></div>
+        Deadline: ${s.deadline}
+      </div>
+    </div>`).join('');
+}
+
+function filterSchols(type, btn) {
+  activeScholarshipFilter = type;
+  document.querySelectorAll('.schol-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered = type === 'all' ? SCHOLARSHIPS : SCHOLARSHIPS.filter(s => s.type === type);
+  renderSchols(filtered);
+}
+
+// ══════════════════════════════════════════════
+// PAYMENT MODAL
+// ══════════════════════════════════════════════
+
+function openPayment() {
+  document.getElementById('paymentModal').classList.add('open');
+}
+
+function closePayment() {
+  document.getElementById('paymentModal').classList.remove('open');
+}
+
+function processMockPayment() {
+  closePayment();
+  isPro = true;
+  queriesUsed = 0;
+  document.getElementById('queryLeft').textContent = '∞';
+  document.getElementById('queryLeft').style.color = 'var(--gold)';
+  document.querySelector('.plan-name').textContent = 'Pro Plan ⭐';
+  document.querySelector('.plan-queries').textContent = 'Unlimited queries';
+  document.querySelector('.queries-fill').style.width = '100%';
+  document.querySelector('.upgrade-btn').textContent = '✓ Pro Active';
+  document.querySelector('.upgrade-btn').style.opacity = '0.6';
+  document.querySelector('.upgrade-btn').disabled = true;
+  showToast('🎉 Pro Plan activated! Unlimited queries unlocked.');
+}
+
+// ══════════════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════════════
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+
+window.addEventListener('DOMContentLoaded', () => {
+  // Close modals on backdrop click
+  document.getElementById('paymentModal').addEventListener('click', function(e) {
+    if (e.target === this) closePayment();
+  });
+  document.getElementById('uniPickerModal').addEventListener('click', function(e) {
+    if (e.target === this) closeUniPicker();
+  });
+
+  // Init compare slots
+  updateCompareSlots();
+
+  // Keyboard shortcut
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closePayment();
+      closeUniPicker();
+    }
+  });
+});
+</script>
+</body>
+</html>
